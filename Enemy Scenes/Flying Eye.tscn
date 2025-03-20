@@ -1,0 +1,76 @@
+[gd_scene load_steps=11 format=3 uid="uid://b5qtfj2ipmw7q"]
+
+[ext_resource type="Texture2D" uid="uid://c3sn0fx73y0wa" path="res://Assets/Enemies/Monsters_Creatures_Fantasy/Flying eye/Flight.png" id="1_1abh6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a4ygg"]
+atlas = ExtResource("1_1abh6")
+region = Rect2(0, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_45t6j"]
+atlas = ExtResource("1_1abh6")
+region = Rect2(150, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j2bps"]
+atlas = ExtResource("1_1abh6")
+region = Rect2(300, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aprht"]
+atlas = ExtResource("1_1abh6")
+region = Rect2(450, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tnwce"]
+atlas = ExtResource("1_1abh6")
+region = Rect2(600, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gr4mi"]
+atlas = ExtResource("1_1abh6")
+region = Rect2(750, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e1iuc"]
+atlas = ExtResource("1_1abh6")
+region = Rect2(900, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gwqbd"]
+atlas = ExtResource("1_1abh6")
+region = Rect2(1050, 0, 150, 150)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_muh8v"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a4ygg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_45t6j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j2bps")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aprht")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tnwce")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gr4mi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e1iuc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gwqbd")
+}],
+"loop": true,
+"name": &"IDle",
+"speed": 8.0
+}]
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_muh8v")
+animation = &"IDle"
+autoplay = "IDle"
+frame = 2
+frame_progress = 0.632565

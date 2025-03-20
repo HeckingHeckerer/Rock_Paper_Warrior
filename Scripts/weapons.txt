@@ -1,0 +1,22 @@
+extends Node
+
+func _ready():
+    var weapons = {
+        "sword": 100,
+        "shield": 50,
+        "dualswords": 200,
+        "spear": 150
+    }
+    
+    var current_weapon = "sword"  # This would be set dynamically in your game
+    
+    # Check if the player is holding a sword
+    if current_weapon in weapons:
+        print("Player is holding a ", current_weapon)
+        
+        # Additional check for sword specifically
+        if current_weapon == "sword":
+            print("Player is holding a sword!")
+    
+    else:
+        print("No valid weapon equipped")

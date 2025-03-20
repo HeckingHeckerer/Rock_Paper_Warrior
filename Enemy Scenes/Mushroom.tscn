@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=3 uid="uid://vbunagii54t"]
+
+[ext_resource type="Texture2D" uid="uid://d26yk6nyywkuw" path="res://Assets/Enemies/Monsters_Creatures_Fantasy/Mushroom/Idle.png" id="1_6l8yu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f1ofn"]
+atlas = ExtResource("1_6l8yu")
+region = Rect2(0, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r32ya"]
+atlas = ExtResource("1_6l8yu")
+region = Rect2(150, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_af8wr"]
+atlas = ExtResource("1_6l8yu")
+region = Rect2(300, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_flkms"]
+atlas = ExtResource("1_6l8yu")
+region = Rect2(450, 0, 150, 150)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_58en8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f1ofn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r32ya")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_af8wr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_flkms")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}]
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_58en8")
+animation = &"Idle"
+autoplay = "Idle"
+frame_progress = 0.178554

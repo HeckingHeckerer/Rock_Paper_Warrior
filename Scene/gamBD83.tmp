@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://nrfucry6605l"]
+
+[ext_resource type="PackedScene" uid="uid://dbvvwwj16ctcg" path="res://Scene/main_character.tscn" id="1_7ye8e"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_so0u1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w7a02"]
+size = Vector2(20, 110)
+
+[node name="Game" type="Node2D"]
+
+[node name="Main Character" parent="." instance=ExtResource("1_7ye8e")]
+speed = null
+jump_force = null
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(-5, 25)
+scale = Vector2(4.43263, 70100.4)
+zoom = Vector2(2, 2)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="Bottom world border" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-2, 119)
+shape = SubResource("WorldBoundaryShape2D_so0u1")
+
+[node name="Test rectangle" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-165, 52)
+shape = SubResource("RectangleShape2D_w7a02")
