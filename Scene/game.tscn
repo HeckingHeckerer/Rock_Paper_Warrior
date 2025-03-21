@@ -1,15 +1,15 @@
 [gd_scene load_steps=14 format=3 uid="uid://nrfucry6605l"]
 
-[ext_resource type="PackedScene" uid="uid://dbvvwwj16ctcg" path="res://Scene/main_character.tscn" id="1_7ye8e"]
+[ext_resource type="PackedScene" uid="uid://dbvvwwj16ctcg" path="res://Rock_Paper_Warrior/Scene/main_character.tscn" id="1_7ye8e"]
 [ext_resource type="Texture2D" uid="uid://vvbt2t7tik0v" path="res://Assets/Places and backgrounds/Oakwood/oak_woods_v1.0/oak_woods_tileset.png" id="2_jhpr0"]
-[ext_resource type="PackedScene" uid="uid://ccs5qfna5pmma" path="res://Scene/Wizard Boss.tscn" id="3_8sui3"]
-[ext_resource type="PackedScene" uid="uid://cds73mvooj61t" path="res://Scene/Warrior.tscn" id="4_etr8y"]
-[ext_resource type="PackedScene" uid="uid://c0o6qkfqcuayi" path="res://Scene/Honor Boss.tscn" id="5_o850p"]
-[ext_resource type="PackedScene" uid="uid://siqc2bo3yjqc" path="res://Scene/King Boss.tscn" id="6_ja5w5"]
-[ext_resource type="PackedScene" uid="uid://b5qtfj2ipmw7q" path="res://Enemy Scenes/Flying Eye.tscn" id="7_5y5g1"]
-[ext_resource type="PackedScene" uid="uid://dvjbxvjafeekp" path="res://Enemy Scenes/Goblin.tscn" id="8_gx6lx"]
-[ext_resource type="PackedScene" uid="uid://vbunagii54t" path="res://Enemy Scenes/Mushroom.tscn" id="9_6pnbn"]
-[ext_resource type="PackedScene" uid="uid://d2r2yoxyinnsv" path="res://Enemy Scenes/Skelly.tscn" id="10_wt1fa"]
+[ext_resource type="PackedScene" uid="uid://ccs5qfna5pmma" path="res://Rock_Paper_Warrior/Scene/Wizard Boss.tscn" id="3_8sui3"]
+[ext_resource type="PackedScene" uid="uid://cds73mvooj61t" path="res://Rock_Paper_Warrior/Scene/Warrior.tscn" id="4_etr8y"]
+[ext_resource type="PackedScene" uid="uid://c0o6qkfqcuayi" path="res://Rock_Paper_Warrior/Scene/Honor Boss.tscn" id="5_o850p"]
+[ext_resource type="PackedScene" uid="uid://siqc2bo3yjqc" path="res://Rock_Paper_Warrior/Scene/King Boss.tscn" id="6_ja5w5"]
+[ext_resource type="PackedScene" uid="uid://b5qtfj2ipmw7q" path="res://Rock_Paper_Warrior/Enemy Scenes/Flying Eye.tscn" id="7_5y5g1"]
+[ext_resource type="PackedScene" uid="uid://dvjbxvjafeekp" path="res://Rock_Paper_Warrior/Enemy Scenes/Goblin.tscn" id="8_gx6lx"]
+[ext_resource type="PackedScene" uid="uid://vbunagii54t" path="res://Rock_Paper_Warrior/Enemy Scenes/Mushroom.tscn" id="9_6pnbn"]
+[ext_resource type="PackedScene" uid="uid://d2r2yoxyinnsv" path="res://Rock_Paper_Warrior/Enemy Scenes/Skelly.tscn" id="10_wt1fa"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_so0u1"]
 distance = 157.0
@@ -610,7 +610,7 @@ position = Vector2(482, 99)
 position = Vector2(533, 71)
 
 [node name="CharacterBody2D5" parent="." instance=ExtResource("7_5y5g1")]
-position = Vector2(587, 25)
+position = Vector2(594, 30)
 
 [node name="CharacterBody2D6" parent="." instance=ExtResource("8_gx6lx")]
 position = Vector2(668, 93)

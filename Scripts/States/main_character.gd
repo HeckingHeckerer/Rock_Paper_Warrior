@@ -25,8 +25,8 @@ const sprint_speed = 300
 
 
 #loading collision shapes
-var standing_cshape = preload("res://Resources/mc_standing_idle_cshape.tres")
-var crouching_cshape = preload("res://Resources/mc_crouch_idle_cshape.tres")
+var standing_cshape = preload("res://Rock_Paper_Warrior/Resources/mc_standing_idle_cshape.tres")
+var crouching_cshape = preload("res://Rock_Paper_Warrior/Resources/mc_crouch_idle_cshape.tres")
 
 
 
