@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://cds73mvooj61t"]
+[gd_scene load_steps=58 format=3 uid="uid://cds73mvooj61t"]
 
 [ext_resource type="Texture2D" uid="uid://cv27oyh8beerc" path="res://Assets/Characters/Fantasy Warrior/Sprites/Attack1.png" id="1_qqoe5"]
 [ext_resource type="Script" uid="uid://b47tk04h7vnyg" path="res://Rock_Paper_Warrior/Scripts/Bandit Blade/warrior.gd" id="1_u4h3m"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://lyfmyvfi8d3e" path="res://Assets/Characters/Fantasy Warrior/Sprites/Idle.png" id="5_qmud0"]
 [ext_resource type="Texture2D" uid="uid://c0md4cvi6cbqx" path="res://Assets/Characters/Fantasy Warrior/Sprites/Run.png" id="6_cf1b8"]
 [ext_resource type="Script" uid="uid://govngp03l003" path="res://Rock_Paper_Warrior/Scripts/Bandit Blade/state_machine.gd" id="8_7i82n"]
+[ext_resource type="Script" uid="uid://fok5vjq2qx4b" path="res://Rock_Paper_Warrior/Scripts/Bandit Blade/Bandit_idle.gd" id="9_74y5l"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ptkkk"]
 atlas = ExtResource("1_qqoe5")
@@ -337,7 +338,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_eqdjb")
 }],
-"loop": true,
+"loop": false,
 "name": &"Idle",
 "speed": 10.0
 }, {
@@ -371,7 +372,7 @@ animations = [{
 "speed": 13.0
 }]
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[node name="BossBandit" type="CharacterBody2D"]
 script = ExtResource("1_u4h3m")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -381,11 +382,11 @@ autoplay = "Idle"
 frame = 3
 frame_progress = 0.634735
 
-[node name="StateMachine" type="Node" parent="."]
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("8_7i82n")
+initial_state = NodePath("Enemy_idle")
 
-[node name="Node" type="Node" parent="StateMachine"]
-
-[node name="Node2" type="Node" parent="StateMachine"]
-
-[node name="Node3" type="Node" parent="StateMachine"]
+[node name="Enemy_idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("Boss")]
+script = ExtResource("9_74y5l")
+Boss = NodePath("../..")
+metadata/_custom_type_script = "uid://fok5vjq2qx4b"
