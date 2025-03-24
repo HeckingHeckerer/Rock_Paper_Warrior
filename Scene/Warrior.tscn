@@ -338,7 +338,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_eqdjb")
 }],
-"loop": false,
+"loop": true,
 "name": &"Idle",
 "speed": 10.0
 }, {
@@ -377,10 +377,9 @@ script = ExtResource("1_u4h3m")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_y0rju")
-animation = &"Idle"
+animation = &"Run"
 autoplay = "Idle"
-frame = 3
-frame_progress = 0.634735
+frame_progress = 0.94208
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("8_7i82n")
