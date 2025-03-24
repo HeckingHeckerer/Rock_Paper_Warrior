@@ -1,11 +1,13 @@
-[gd_scene load_steps=55 format=3 uid="uid://cds73mvooj61t"]
+[gd_scene load_steps=57 format=3 uid="uid://cds73mvooj61t"]
 
 [ext_resource type="Texture2D" uid="uid://cv27oyh8beerc" path="res://Assets/Characters/Fantasy Warrior/Sprites/Attack1.png" id="1_qqoe5"]
+[ext_resource type="Script" uid="uid://b47tk04h7vnyg" path="res://Rock_Paper_Warrior/Scripts/Bandit Blade/warrior.gd" id="1_u4h3m"]
 [ext_resource type="Texture2D" uid="uid://b8i768ax00346" path="res://Assets/Characters/Fantasy Warrior/Sprites/Attack2.png" id="2_n3xh4"]
 [ext_resource type="Texture2D" uid="uid://bbid7y0o8m22m" path="res://Assets/Characters/Fantasy Warrior/Sprites/Attack3.png" id="3_8hcd8"]
 [ext_resource type="Texture2D" uid="uid://d1umibxhqr2w4" path="res://Assets/Characters/Fantasy Warrior/Sprites/Death.png" id="4_cjgr3"]
 [ext_resource type="Texture2D" uid="uid://lyfmyvfi8d3e" path="res://Assets/Characters/Fantasy Warrior/Sprites/Idle.png" id="5_qmud0"]
 [ext_resource type="Texture2D" uid="uid://c0md4cvi6cbqx" path="res://Assets/Characters/Fantasy Warrior/Sprites/Run.png" id="6_cf1b8"]
+[ext_resource type="Script" uid="uid://govngp03l003" path="res://Rock_Paper_Warrior/Scripts/Bandit Blade/state_machine.gd" id="8_7i82n"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ptkkk"]
 atlas = ExtResource("1_qqoe5")
@@ -370,6 +372,7 @@ animations = [{
 }]
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
+script = ExtResource("1_u4h3m")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_y0rju")
@@ -377,3 +380,12 @@ animation = &"Idle"
 autoplay = "Idle"
 frame = 3
 frame_progress = 0.634735
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("8_7i82n")
+
+[node name="Node" type="Node" parent="StateMachine"]
+
+[node name="Node2" type="Node" parent="StateMachine"]
+
+[node name="Node3" type="Node" parent="StateMachine"]
