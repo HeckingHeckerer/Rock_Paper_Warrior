@@ -14,3 +14,6 @@ func update(_delta):
 
 func physiscs_update(_delta):
 	pass
+	
+func handle_input(_delta):
+	pass
