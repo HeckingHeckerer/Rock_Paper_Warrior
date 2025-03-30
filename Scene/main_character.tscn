@@ -1,6 +1,6 @@
-[gd_scene load_steps=79 format=3 uid="uid://dbvvwwj16ctcg"]
+[gd_scene load_steps=76 format=3 uid="uid://dbvvwwj16ctcg"]
 
-[ext_resource type="Script" uid="uid://pbaayokmmmvf" path="res://Rock_Paper_Warrior/Scripts/States/Player_Essentials.gd" id="1_x3r51"]
+[ext_resource type="Script" uid="uid://dx7g2ctb1bbpy" path="res://Rock_Paper_Warrior/Scripts/For the Player/Final_Player.gd" id="1_628a5"]
 [ext_resource type="Texture2D" uid="uid://14uq5pq8kanf" path="res://Assets/Characters/Main char/Colour2/Outline/120x80_PNGSheets/_Idle.png" id="2_6qo8a"]
 [ext_resource type="Texture2D" uid="uid://c5tcuyht8nxrw" path="res://Assets/Characters/Main char/Colour2/Outline/120x80_PNGSheets/_Attack2.png" id="3_v7x3g"]
 [ext_resource type="Texture2D" uid="uid://cp7hetd88dhps" path="res://Assets/Characters/Main char/Colour2/Outline/120x80_PNGSheets/_CrouchTransition.png" id="4_mbnys"]
@@ -12,9 +12,6 @@
 [ext_resource type="Texture2D" uid="uid://c1hkgd6r8cgw2" path="res://Assets/Characters/Main char/Colour2/Outline/120x80_PNGSheets/_Sprint.png" id="10_swii4"]
 [ext_resource type="Texture2D" uid="uid://c2bnc8orc5ymx" path="res://Assets/Characters/Main char/Colour2/Outline/120x80_PNGSheets/_WallSlide.png" id="11_gyby3"]
 [ext_resource type="Shape2D" uid="uid://dw3toroiojl2c" path="res://Rock_Paper_Warrior/Resources/mc_standing_idle_cshape.tres" id="12_4aw1v"]
-[ext_resource type="Script" uid="uid://cy5gthsgdbufq" path="res://Rock_Paper_Warrior/Scripts/States/playerstatemanager.gd" id="12_bihdi"]
-[ext_resource type="Script" uid="uid://lm7li07jm7va" path="res://Rock_Paper_Warrior/Scripts/States/player_idle.gd" id="14_fv1rx"]
-[ext_resource type="Script" uid="uid://dqpfhnriijrpp" path="res://Rock_Paper_Warrior/Scripts/States/player_run_state.gd" id="15_628a5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nn2ur"]
 atlas = ExtResource("2_6qo8a")
@@ -504,7 +501,7 @@ animations = [{
 }]
 
 [node name="Main Character" type="CharacterBody2D"]
-script = ExtResource("1_x3r51")
+script = ExtResource("1_628a5")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-37, -41)
@@ -522,14 +519,3 @@ shape = ExtResource("12_4aw1v")
 [node name="wall slide timer" type="Timer" parent="."]
 
 [node name="play roll timer" type="Timer" parent="."]
-
-[node name="playerstatemachine" type="Node" parent="."]
-script = ExtResource("12_bihdi")
-
-[node name="IdleState" type="Node" parent="playerstatemachine"]
-script = ExtResource("14_fv1rx")
-metadata/_custom_type_script = "uid://lm7li07jm7va"
-
-[node name="RunState" type="Node" parent="playerstatemachine"]
-script = ExtResource("15_628a5")
-metadata/_custom_type_script = "uid://dqpfhnriijrpp"
