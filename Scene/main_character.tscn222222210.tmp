@@ -1,10 +1,9 @@
-[gd_scene load_steps=81 format=3 uid="uid://dbvvwwj16ctcg"]
+[gd_scene load_steps=76 format=3 uid="uid://dbvvwwj16ctcg"]
 
 [ext_resource type="Script" uid="uid://dx7g2ctb1bbpy" path="res://Rock_Paper_Warrior/Scripts/For the Player/Final_Player.gd" id="1_628a5"]
 [ext_resource type="Texture2D" uid="uid://14uq5pq8kanf" path="res://Assets/Characters/Main char/Colour2/Outline/120x80_PNGSheets/_Idle.png" id="2_6qo8a"]
 [ext_resource type="Texture2D" uid="uid://c5tcuyht8nxrw" path="res://Assets/Characters/Main char/Colour2/Outline/120x80_PNGSheets/_Attack2.png" id="3_v7x3g"]
 [ext_resource type="Texture2D" uid="uid://cp7hetd88dhps" path="res://Assets/Characters/Main char/Colour2/Outline/120x80_PNGSheets/_CrouchTransition.png" id="4_mbnys"]
-[ext_resource type="Texture2D" uid="uid://darkd10yp7ak6" path="res://Assets/Characters/Main char/Colour2/Outline/120x80_PNGSheets/_Attack.png" id="4_x3r51"]
 [ext_resource type="Texture2D" uid="uid://c74ns4gp8ef7p" path="res://Assets/Characters/Main char/Colour2/Outline/120x80_PNGSheets/Crouch_Idle.png" id="5_45x07"]
 [ext_resource type="Texture2D" uid="uid://b03njs7pb8xxm" path="res://Assets/Characters/Main char/Colour2/Outline/120x80_PNGSheets/_CrouchWalk.png" id="6_pssdu"]
 [ext_resource type="Texture2D" uid="uid://dcqcob3lypw8k" path="res://Assets/Characters/Main char/Colour2/Outline/120x80_PNGSheets/_Fall.png" id="7_tgokk"]
@@ -77,22 +76,6 @@ region = Rect2(480, 0, 120, 80)
 [sub_resource type="AtlasTexture" id="AtlasTexture_kp1u1"]
 atlas = ExtResource("3_v7x3g")
 region = Rect2(600, 0, 120, 80)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fv1rx"]
-atlas = ExtResource("4_x3r51")
-region = Rect2(0, 0, 120, 80)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_628a5"]
-atlas = ExtResource("4_x3r51")
-region = Rect2(120, 0, 120, 80)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_bxa1f"]
-atlas = ExtResource("4_x3r51")
-region = Rect2(240, 0, 120, 80)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_tusju"]
-atlas = ExtResource("4_x3r51")
-region = Rect2(360, 0, 120, 80)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7u4mo"]
 atlas = ExtResource("4_mbnys")
@@ -336,23 +319,6 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack",
-"speed": 15.0
-}, {
-"frames": [{
-"duration": 2.0,
-"texture": SubResource("AtlasTexture_fv1rx")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_628a5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_bxa1f")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tusju")
-}],
-"loop": false,
-"name": &"attack_2",
 "speed": 15.0
 }, {
 "frames": [{
