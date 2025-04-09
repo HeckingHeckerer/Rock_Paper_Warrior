@@ -1,0 +1,81 @@
+[gd_scene load_steps=16 format=3 uid="uid://c6rure4flohli"]
+
+[ext_resource type="Script" uid="uid://cruk6f3wcrm7d" path="res://Rock_Paper_Warrior/Scripts/Elf Companion/elf_archer.gd" id="1_bfac1"]
+[ext_resource type="Texture2D" uid="uid://ctl2egda2jn00" path="res://Assets/Characters/Elementals_Leaf_ranger_Free_v1.0/Elementals_Leaf_ranger_Free_v1.0/animations/PNG/idle/idle_1.png" id="1_wm27o"]
+[ext_resource type="Texture2D" uid="uid://bkpwbs8ywp5rt" path="res://Assets/Characters/Elementals_Leaf_ranger_Free_v1.0/Elementals_Leaf_ranger_Free_v1.0/animations/PNG/idle/idle_2.png" id="2_bfac1"]
+[ext_resource type="Texture2D" uid="uid://djtrkvrhc4hw4" path="res://Assets/Characters/Elementals_Leaf_ranger_Free_v1.0/Elementals_Leaf_ranger_Free_v1.0/animations/PNG/idle/idle_3.png" id="3_hr2cf"]
+[ext_resource type="Texture2D" uid="uid://debuwocf8kk60" path="res://Assets/Characters/Elementals_Leaf_ranger_Free_v1.0/Elementals_Leaf_ranger_Free_v1.0/animations/PNG/idle/idle_4.png" id="4_tgonn"]
+[ext_resource type="Texture2D" uid="uid://cnkivao55w86g" path="res://Assets/Characters/Elementals_Leaf_ranger_Free_v1.0/Elementals_Leaf_ranger_Free_v1.0/animations/PNG/idle/idle_5.png" id="5_bnctv"]
+[ext_resource type="Texture2D" uid="uid://j823dnyomfiy" path="res://Assets/Characters/Elementals_Leaf_ranger_Free_v1.0/Elementals_Leaf_ranger_Free_v1.0/animations/PNG/idle/idle_6.png" id="6_hv2ri"]
+[ext_resource type="Texture2D" uid="uid://cy3ct8piwebpk" path="res://Assets/Characters/Elementals_Leaf_ranger_Free_v1.0/Elementals_Leaf_ranger_Free_v1.0/animations/PNG/idle/idle_7.png" id="7_02lti"]
+[ext_resource type="Texture2D" uid="uid://n7cax563toan" path="res://Assets/Characters/Elementals_Leaf_ranger_Free_v1.0/Elementals_Leaf_ranger_Free_v1.0/animations/PNG/idle/idle_8.png" id="8_61r54"]
+[ext_resource type="Texture2D" uid="uid://b4gfl6f4ysn4p" path="res://Assets/Characters/Elementals_Leaf_ranger_Free_v1.0/Elementals_Leaf_ranger_Free_v1.0/animations/PNG/idle/idle_9.png" id="9_0rtj0"]
+[ext_resource type="Texture2D" uid="uid://dna0gjkfkc1va" path="res://Assets/Characters/Elementals_Leaf_ranger_Free_v1.0/Elementals_Leaf_ranger_Free_v1.0/animations/PNG/idle/idle_10.png" id="10_57nys"]
+[ext_resource type="Texture2D" uid="uid://crsif60iyua8b" path="res://Assets/Characters/Elementals_Leaf_ranger_Free_v1.0/Elementals_Leaf_ranger_Free_v1.0/animations/PNG/idle/idle_11.png" id="11_qorbt"]
+[ext_resource type="Texture2D" uid="uid://4ufleif2146s" path="res://Assets/Characters/Elementals_Leaf_ranger_Free_v1.0/Elementals_Leaf_ranger_Free_v1.0/animations/PNG/idle/idle_12.png" id="12_rl61a"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g2epf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_wm27o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_bfac1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_hr2cf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_tgonn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_bnctv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_hv2ri")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_02lti")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_61r54")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_0rtj0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_57nys")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_qorbt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_rl61a")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wm27o"]
+radius = 71.0634
+
+[node name="elven archer" type="CharacterBody2D"]
+script = ExtResource("1_bfac1")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-12.375, 5.5)
+scale = Vector2(0.914063, 0.914063)
+sprite_frames = SubResource("SpriteFrames_g2epf")
+autoplay = "default"
+frame_progress = 0.676998
+
+[node name="ChatDetect" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChatDetect"]
+position = Vector2(-13, 40)
+shape = SubResource("CircleShape2D_wm27o")
+
+[connection signal="body_entered" from="ChatDetect" to="." method="_on_chat_detect_body_entered"]
+[connection signal="body_exited" from="ChatDetect" to="." method="_on_chat_detect_body_exited"]

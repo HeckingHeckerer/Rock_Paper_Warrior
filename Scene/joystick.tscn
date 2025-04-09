@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://dvl4uwa838bvk"]
+
+[ext_resource type="Script" uid="uid://briycwo4atatn" path="res://Rock_Paper_Warrior/Scripts/UI/CONTROLS/joystick.gd" id="1_5sxpc"]
+[ext_resource type="Texture2D" uid="uid://kwmdeln0vail" path="res://Assets/Contorls/Joystick dot.png" id="1_efhey"]
+[ext_resource type="Texture2D" uid="uid://dbg1ysemeuc8d" path="res://Assets/Contorls/Joystick ring.png" id="2_rl082"]
+[ext_resource type="Script" uid="uid://j3ut3j3pef7p" path="res://Rock_Paper_Warrior/Scripts/UI/CONTROLS/joystick_knob.gd" id="3_ax0bd"]
+
+[node name="Joystick" type="Node2D"]
+scale = Vector2(0.359999, 0.359999)
+script = ExtResource("1_5sxpc")
+
+[node name="JoystickRing" type="Sprite2D" parent="."]
+position = Vector2(1, 0)
+scale = Vector2(8, 8)
+texture = ExtResource("2_rl082")
+
+[node name="Joystickknob" type="Sprite2D" parent="."]
+position = Vector2(3, 1)
+scale = Vector2(8, 8)
+texture = ExtResource("1_efhey")
+script = ExtResource("3_ax0bd")
+
+[node name="Button" type="Button" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+offset_left = -119.0
+offset_top = -120.0
+offset_right = 121.0
+offset_bottom = 120.0
+
+[connection signal="button_down" from="Button" to="Joystickknob" method="_on_button_button_down"]
+[connection signal="button_up" from="Button" to="Joystickknob" method="_on_button_button_up"]

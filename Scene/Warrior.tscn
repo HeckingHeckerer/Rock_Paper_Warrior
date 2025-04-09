@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://cds73mvooj61t"]
+[gd_scene load_steps=70 format=3 uid="uid://cds73mvooj61t"]
 
 [ext_resource type="Texture2D" uid="uid://cv27oyh8beerc" path="res://Assets/Characters/Fantasy Warrior/Sprites/Attack1.png" id="1_qqoe5"]
 [ext_resource type="Script" uid="uid://b47tk04h7vnyg" path="res://Rock_Paper_Warrior/Scripts/Bandit Blade/Bantid.gd" id="1_u4h3m"]
@@ -8,7 +8,10 @@
 [ext_resource type="Texture2D" uid="uid://lyfmyvfi8d3e" path="res://Assets/Characters/Fantasy Warrior/Sprites/Idle.png" id="5_qmud0"]
 [ext_resource type="Texture2D" uid="uid://c0md4cvi6cbqx" path="res://Assets/Characters/Fantasy Warrior/Sprites/Run.png" id="6_cf1b8"]
 [ext_resource type="Script" uid="uid://govngp03l003" path="res://Rock_Paper_Warrior/Scripts/base_class_&_manager/state_machine.gd" id="8_7i82n"]
+[ext_resource type="Texture2D" uid="uid://kjoumrkbvtb3" path="res://Assets/Characters/Fantasy Warrior/Sprites/Fall.png" id="8_78ugd"]
 [ext_resource type="Script" uid="uid://fok5vjq2qx4b" path="res://Rock_Paper_Warrior/Scripts/Bandit Blade/Bandit_idle.gd" id="9_74y5l"]
+[ext_resource type="Texture2D" uid="uid://crvpr2t8t1gbf" path="res://Assets/Characters/Fantasy Warrior/Sprites/Jump.png" id="9_ha2br"]
+[ext_resource type="Texture2D" uid="uid://cwobp7hidyrcq" path="res://Assets/Characters/Fantasy Warrior/Sprites/Take hit.png" id="10_eimq4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ptkkk"]
 atlas = ExtResource("1_qqoe5")
@@ -198,6 +201,42 @@ region = Rect2(972, 0, 162, 162)
 atlas = ExtResource("6_cf1b8")
 region = Rect2(1134, 0, 162, 162)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_56xva"]
+atlas = ExtResource("8_78ugd")
+region = Rect2(0, 0, 162, 162)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jcdek"]
+atlas = ExtResource("8_78ugd")
+region = Rect2(162, 0, 162, 162)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hy5ry"]
+atlas = ExtResource("8_78ugd")
+region = Rect2(324, 0, 162, 162)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h3as7"]
+atlas = ExtResource("9_ha2br")
+region = Rect2(0, 0, 162, 162)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7syr5"]
+atlas = ExtResource("9_ha2br")
+region = Rect2(162, 0, 162, 162)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ylok8"]
+atlas = ExtResource("9_ha2br")
+region = Rect2(324, 0, 162, 162)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4gnif"]
+atlas = ExtResource("10_eimq4")
+region = Rect2(0, 0, 162, 162)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ypxsw"]
+atlas = ExtResource("10_eimq4")
+region = Rect2(162, 0, 162, 162)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ibgwf"]
+atlas = ExtResource("10_eimq4")
+region = Rect2(324, 0, 162, 162)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_y0rju"]
 animations = [{
 "frames": [{
@@ -370,6 +409,48 @@ animations = [{
 "loop": true,
 "name": &"Run",
 "speed": 13.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_56xva")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jcdek")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hy5ry")
+}],
+"loop": true,
+"name": &"fall",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h3as7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7syr5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ylok8")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4gnif")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ypxsw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ibgwf")
+}],
+"loop": true,
+"name": &"take_hit",
+"speed": 5.0
 }]
 
 [node name="BossBandit" type="CharacterBody2D"]
@@ -377,9 +458,9 @@ script = ExtResource("1_u4h3m")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_y0rju")
-animation = &"Run"
+animation = &"take_hit"
 autoplay = "Idle"
-frame_progress = 0.421914
+frame_progress = 0.0625558
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("8_7i82n")

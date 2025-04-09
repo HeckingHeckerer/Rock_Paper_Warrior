@@ -1,0 +1,18 @@
+join Elf/elf_girl left
+Elf/elf_girl: Hey you!
+Elf/elf_girl: You seem like a capable fighter...
+Elf/elf_girl: But you wont last long on your own.
+Elf/elf_girl: i can accompany you but first you must do something for me.
+Elf/elf_girl: there is a slime creature of sorts just left of this cave,
+Elf/elf_girl: it seems my arrows are ineffective so im forced to use magic...
+Elf/elf_girl: but using magic for long amounts of time can leave you vunerable...
+Elf/elf_girl: i managed to get out alive but im still recovering,
+Elf/elf_girl: defeat that creature and ill accompany you in your journey.
+Elf/elf_girl: what do you say?
+- Ok sure
+	Elf/elf_girl: Great! , the slime monster seems to be immune to physical attacks so magic is your only way of damaging it.
+	Elf/elf_girl: Good Luck! may the gods be with you!
+	[signal arg="exit_elf"]
+- No you're on your own
+	Elf/elf_girl: Well your loss!
+	Elf/elf_girl: Come back next time when you have the balls.

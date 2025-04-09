@@ -1,0 +1,31 @@
+{
+"@path": "res://addons/dialogic/Resources/character.gd",
+"@subpath": NodePath(""),
+&"_translation_id": "",
+&"color": Color(1, 1, 1, 1),
+&"custom_info": {
+"prefix": "",
+"sound_mood_default": "",
+"sound_moods": {},
+"style": "",
+"suffix": ""
+},
+&"default_portrait": "elf_placeholder",
+&"description": "an elven archer ",
+&"display_name": "Elven Archer",
+&"mirror": false,
+&"nicknames": [""],
+&"offset": Vector2(0, 0),
+&"portraits": {
+"elf_placeholder": {
+"export_overrides": {
+"image": "\"res://Assets/Characters/Elementals_Leaf_ranger_Free_v1.0/Elementals_Leaf_ranger_Free_v1.0/leaf_ranger.png\""
+},
+"mirror": false,
+"offset": Vector2(-200, 0),
+"scale": 0.5,
+"scene": ""
+}
+},
+&"scale": 1.0
+}

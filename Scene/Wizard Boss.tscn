@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://ccs5qfna5pmma"]
+[gd_scene load_steps=56 format=3 uid="uid://ccs5qfna5pmma"]
 
 [ext_resource type="Texture2D" uid="uid://bjk08ugf8vono" path="res://Assets/Characters/EVil Wizard 2/Sprites/Attack1.png" id="1_wvote"]
 [ext_resource type="Texture2D" uid="uid://ca7sg7f7y5tsw" path="res://Assets/Characters/EVil Wizard 2/Sprites/Attack2.png" id="2_0xn2s"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://cus1vt3x0k7hf" path="res://Assets/Characters/EVil Wizard 2/Sprites/Idle.png" id="4_j7ia8"]
 [ext_resource type="Texture2D" uid="uid://bs2nsyyyya1rs" path="res://Assets/Characters/EVil Wizard 2/Sprites/Jump.png" id="5_a8g50"]
 [ext_resource type="Texture2D" uid="uid://c3srbhtmphi8y" path="res://Assets/Characters/EVil Wizard 2/Sprites/Run.png" id="6_2qofw"]
+[ext_resource type="Texture2D" uid="uid://knbv1r2jq4jd" path="res://Assets/Characters/EVil Wizard 2/Sprites/Fall.png" id="7_sjjds"]
+[ext_resource type="Texture2D" uid="uid://c4fwrhg3snalw" path="res://Assets/Characters/EVil Wizard 2/Sprites/Take hit.png" id="8_p1v8x"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_euh8k"]
 atlas = ExtResource("1_wvote")
@@ -171,6 +173,26 @@ region = Rect2(1500, 0, 250, 250)
 atlas = ExtResource("6_2qofw")
 region = Rect2(1750, 0, 250, 250)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_5pmff"]
+atlas = ExtResource("7_sjjds")
+region = Rect2(0, 0, 250, 250)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j02n0"]
+atlas = ExtResource("7_sjjds")
+region = Rect2(250, 0, 250, 250)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_527os"]
+atlas = ExtResource("8_p1v8x")
+region = Rect2(0, 0, 250, 250)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bn71y"]
+atlas = ExtResource("8_p1v8x")
+region = Rect2(250, 0, 250, 250)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_io3yy"]
+atlas = ExtResource("8_p1v8x")
+region = Rect2(500, 0, 250, 250)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_fysic"]
 animations = [{
 "frames": [{
@@ -325,12 +347,37 @@ animations = [{
 "loop": true,
 "name": &"Run",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5pmff")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j02n0")
+}],
+"loop": true,
+"name": &"fall",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_527os")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bn71y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_io3yy")
+}],
+"loop": true,
+"name": &"take_hit",
+"speed": 5.0
 }]
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_fysic")
-animation = &"Attack2"
+animation = &"fall"
 autoplay = "Idle"
-frame_progress = 0.189576
+frame_progress = 0.0369861

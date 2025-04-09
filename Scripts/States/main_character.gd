@@ -3,23 +3,27 @@ extends CharacterBody2D  # Use CharacterBody2D in Godot 4
 @export var speed = 165
 @export var jump_force = -300
 @export var gravity = 1000
-@export var wall_slide_delay = 0.25  # Time before sliding starts
+
 @export var play_roll_animation_timer = 1 #the duration the animation plays
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 @export var wallclimb_jumpforce = -200
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
-@onready var wall_slide_timer: Timer = $"wall slide timer"
+
 @onready var play_roll_timer: Timer = $"play roll timer" #as timer runs, all animations are overwrited and replaced ny the roll duration for as long as the timer
 
 var current_state
 var last_facing_direction = 1
-var can_wall_slide = false  # Prevents wall slide before 1s
-const wall_slide_gravity = 100 #A cool mechanic if u set this to 0 it will stick to the wall
+
 var is_wall_sliding = false 
 const crouch_speed = 80
 const sprint_speed = 300
 
+
+@export var wall_slide_delay = 0.25  # Time before sliding starts
+@onready var wall_slide_timer: Timer = $"wall slide timer"
+var can_wall_slide = false  # Prevents wall slide before 1s
+const wall_slide_gravity = 100 #A cool mechanic if u set this to 0 it will stick to the wall
 
 
 
