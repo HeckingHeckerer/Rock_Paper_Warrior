@@ -453,7 +453,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"crouch_walk",
-"speed": 9.0
+"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -574,7 +574,7 @@ script = ExtResource("1_628a5")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-37, -41)
 sprite_frames = SubResource("SpriteFrames_13fa7")
-animation = &"crouch_idle"
+animation = &"Idle"
 autoplay = "Idle"
 offset = Vector2(-2.5, 0)
 

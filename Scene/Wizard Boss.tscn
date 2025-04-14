@@ -380,4 +380,4 @@ animations = [{
 sprite_frames = SubResource("SpriteFrames_fysic")
 animation = &"fall"
 autoplay = "Idle"
-frame_progress = 0.0369861
+frame_progress = 0.0964334

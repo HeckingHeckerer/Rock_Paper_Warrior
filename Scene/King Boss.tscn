@@ -356,6 +356,6 @@ animations = [{
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_ftcjt")
-animation = &"run"
+animation = &"jump"
 autoplay = "Idle"
-frame_progress = 0.408219
+frame_progress = 0.0580343
