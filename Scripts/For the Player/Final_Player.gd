@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 @onready var animatedsprite = $AnimatedSprite2D
 @export var speed = 165
-@export var jump_force = -300
+@export var jump_force = -330
 const crouch_speed = 60
 const atk_speed = 100
 const sprint_speed = 300
@@ -198,15 +198,17 @@ func idle_update(delta : float):
 	if Input.is_action_pressed("crouch_idle"):
 		main_sm.dispatch(&"to_crouch")
 		
+	
+		
 
 
 func walk_start():
 	animatedsprite.play("run")
 	_standing_cshape()
-	
+	print("entered walk")
 func walk_update(delta : float):
 	
-	print("entered walk")
+	
 	direction = Input.get_axis("left", "right")
 	
 	velocity.x = direction * speed

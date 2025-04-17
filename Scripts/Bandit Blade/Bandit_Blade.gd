@@ -13,7 +13,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity += get_gravity() * delta
 	
-	move(1,10)
+	
 	move_and_slide()
 	
 	
@@ -24,7 +24,7 @@ func move(dir, speed):
 	updateflip(dir)
 	
 func updateflip(dir):
-	if abs(dir) == dir:
+	if dir > 0:
 		animated_sprite.flip_h = false
 	else:
 		animated_sprite.flip_h = true

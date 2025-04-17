@@ -1,0 +1,46 @@
+[gd_scene load_steps=8 format=3 uid="uid://bb0au58pjul55"]
+
+[ext_resource type="Texture2D" uid="uid://c0kjsoyg31uh6" path="res://Assets/Contorls/buTTONS/Sprites/shaded-dark/shadedDark24.png" id="1_tw5oq"]
+[ext_resource type="Texture2D" uid="uid://dyk834fg7872c" path="res://Assets/Contorls/buTTONS/Sprites/shaded-dark/shadedDark25.png" id="2_l0fq4"]
+[ext_resource type="Texture2D" uid="uid://brrvqellwu2rc" path="res://Assets/Contorls/buTTONS/Sprites/shaded-dark/shadedDark45.png" id="3_xy6ph"]
+[ext_resource type="Texture2D" uid="uid://c3guplfd24tih" path="res://Assets/Contorls/buTTONS/Sprites/shaded-dark/shadedDark27.png" id="4_kvvwe"]
+[ext_resource type="Texture2D" uid="uid://opkpu26yxw2n" path="res://Assets/Contorls/buTTONS/Sprites/shaded-dark/shadedDark48.png" id="5_14sxn"]
+[ext_resource type="Texture2D" uid="uid://cm5vnx6s103gn" path="res://Assets/Contorls/buTTONS/Sprites/shaded-dark/shadedDark36.png" id="6_l0fq4"]
+[ext_resource type="Texture2D" uid="uid://doqrgfggaqmme" path="res://Assets/Contorls/buTTONS/Sprites/shaded-dark/shadedDark29.png" id="7_xy6ph"]
+
+[node name="Buttons" type="CanvasLayer"]
+
+[node name="left" type="TouchScreenButton" parent="."]
+position = Vector2(17, 546)
+texture_normal = ExtResource("1_tw5oq")
+action = "left"
+
+[node name="right" type="TouchScreenButton" parent="."]
+position = Vector2(165, 547)
+texture_normal = ExtResource("2_l0fq4")
+action = "right"
+
+[node name="jump" type="TouchScreenButton" parent="."]
+position = Vector2(1307, 545)
+texture_normal = ExtResource("3_xy6ph")
+action = "up"
+
+[node name="crouch" type="TouchScreenButton" parent="."]
+position = Vector2(1162, 547)
+texture_normal = ExtResource("4_kvvwe")
+action = "crouch_idle"
+
+[node name="attack" type="TouchScreenButton" parent="."]
+position = Vector2(1309, 398)
+texture_normal = ExtResource("5_14sxn")
+action = "attack"
+
+[node name="sprint" type="TouchScreenButton" parent="."]
+position = Vector2(1162, 405)
+texture_normal = ExtResource("6_l0fq4")
+action = "sprint"
+
+[node name="right2" type="TouchScreenButton" parent="."]
+position = Vector2(1304, 273)
+texture_normal = ExtResource("7_xy6ph")
+action = "interact"

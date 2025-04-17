@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://nrfucry6605l"]
+[gd_scene load_steps=33 format=3 uid="uid://nrfucry6605l"]
 
 [ext_resource type="PackedScene" uid="uid://dbvvwwj16ctcg" path="res://Rock_Paper_Warrior/Scene/main_character.tscn" id="1_7ye8e"]
 [ext_resource type="Texture2D" uid="uid://vvbt2t7tik0v" path="res://Assets/Places and backgrounds/Oakwood/oak_woods_v1.0/oak_woods_tileset.png" id="2_jhpr0"]
@@ -16,11 +16,14 @@
 [ext_resource type="PackedScene" uid="uid://cjynt5gygv8rt" path="res://Rock_Paper_Warrior/Scene/wizards merchant.tscn" id="14_076av"]
 [ext_resource type="Texture2D" uid="uid://yj5kkj2d62yd" path="res://Assets/Places and backgrounds/forest-nature-fantasy-tileset-free/Fantasy Swamp Forest/Free/BG_1/BG_1.png" id="15_7u4fy"]
 [ext_resource type="Texture2D" uid="uid://cvl6652gbwqos" path="res://Assets/Places and backgrounds/Medieval Props/spr_FirePlace2_strip.png" id="16_inoe5"]
+[ext_resource type="Texture2D" uid="uid://hkfijc8uvttu" path="res://Assets/Places and backgrounds/DUNGEON/gB5ImI.png" id="17_is12a"]
+[ext_resource type="Script" uid="uid://foiv5w7bltyn" path="res://Rock_Paper_Warrior/Scripts/World_gates/From_game_To_World_1.gd" id="18_ohycv"]
+[ext_resource type="PackedScene" uid="uid://bb0au58pjul55" path="res://Rock_Paper_Warrior/Scene/buttons.tscn" id="19_nbfoq"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_so0u1"]
 distance = 157.0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eih5o"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_l14o8"]
 texture = ExtResource("2_jhpr0")
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -575,7 +578,7 @@ texture = ExtResource("2_jhpr0")
 
 [sub_resource type="TileSet" id="TileSet_da0ug"]
 physics_layer_0/collision_layer = 1
-sources/0 = SubResource("TileSetAtlasSource_eih5o")
+sources/0 = SubResource("TileSetAtlasSource_l14o8")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_inoe5"]
 atlas = ExtResource("16_inoe5")
@@ -627,11 +630,55 @@ animations = [{
 "speed": 9.0
 }]
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ohycv"]
+texture = ExtResource("17_is12a")
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+5:5/0 = 0
+0:1/size_in_atlas = Vector2i(3, 4)
+0:1/0 = 0
+3:1/size_in_atlas = Vector2i(3, 4)
+3:1/0 = 0
+0:6/size_in_atlas = Vector2i(3, 3)
+0:6/0 = 0
+3:6/size_in_atlas = Vector2i(3, 3)
+3:6/0 = 0
+6:6/size_in_atlas = Vector2i(3, 3)
+6:6/0 = 0
+9:6/size_in_atlas = Vector2i(3, 3)
+9:6/0 = 0
+12:5/size_in_atlas = Vector2i(3, 4)
+12:5/0 = 0
+15:5/size_in_atlas = Vector2i(3, 4)
+15:5/0 = 0
+18:6/size_in_atlas = Vector2i(3, 3)
+18:6/0 = 0
+12:1/size_in_atlas = Vector2i(3, 4)
+12:1/0 = 0
+15:1/size_in_atlas = Vector2i(3, 4)
+15:1/0 = 0
+18:0/size_in_atlas = Vector2i(3, 6)
+18:0/0 = 0
+9:1/size_in_atlas = Vector2i(2, 5)
+9:1/0 = 0
+6:1/size_in_atlas = Vector2i(2, 5)
+6:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_nbfoq"]
+sources/0 = SubResource("TileSetAtlasSource_ohycv")
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_is12a"]
+radius = 15.0
+height = 72.0
+
 [node name="Game" type="Node2D"]
 
 [node name="Main Character2" parent="." instance=ExtResource("1_7ye8e")]
 z_index = 7
-position = Vector2(41, 21)
+position = Vector2(34, 64)
 
 [node name="Camera2D" type="Camera2D" parent="Main Character2"]
 position = Vector2(-40, -79)
@@ -703,3 +750,28 @@ z_index = 5
 position = Vector2(-369, 89)
 sprite_frames = SubResource("SpriteFrames_pbyk6")
 autoplay = "default"
+
+[node name="TileMap2" type="TileMap" parent="."]
+position = Vector2(983, -52)
+tile_set = SubResource("TileSet_nbfoq")
+format = 2
+layer_0/tile_data = PackedInt32Array(393156, 589824, 1)
+
+[node name="Area2D" type="Area2D" parent="TileMap2"]
+script = ExtResource("18_ohycv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMap2/Area2D"]
+position = Vector2(-952, 83)
+shape = SubResource("CapsuleShape2D_is12a")
+
+[node name="Control" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Buttons" parent="Control" instance=ExtResource("19_nbfoq")]
+
+[connection signal="body_entered" from="TileMap2/Area2D" to="TileMap2/Area2D" method="_on_body_entered"]
+[connection signal="body_exited" from="TileMap2/Area2D" to="TileMap2/Area2D" method="_on_body_exited"]

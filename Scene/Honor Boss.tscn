@@ -384,7 +384,5 @@ animations = [{
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_5hnk8")
-animation = &"death"
+animation = &"dodge_back"
 autoplay = "Idle"
-frame = 5
-frame_progress = 1.0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=3 uid="uid://cds73mvooj61t"]
+[gd_scene load_steps=70 format=3 uid="uid://cds73mvooj61t"]
 
 [ext_resource type="Texture2D" uid="uid://cv27oyh8beerc" path="res://Assets/Characters/Fantasy Warrior/Sprites/Attack1.png" id="1_qqoe5"]
 [ext_resource type="Script" uid="uid://r5udxy6hshj4" path="res://Rock_Paper_Warrior/Scripts/Bandit Blade/Bandit_Blade.gd" id="1_u5j0i"]
@@ -454,6 +454,8 @@ animations = [{
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_74y5l"]
 height = 46.0
 
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_u5j0i"]
+
 [node name="BossBandit" type="CharacterBody2D"]
 script = ExtResource("1_u5j0i")
 
@@ -461,7 +463,7 @@ script = ExtResource("1_u5j0i")
 sprite_frames = SubResource("SpriteFrames_y0rju")
 animation = &"fall"
 autoplay = "Idle"
-frame_progress = 0.89101
+frame_progress = 0.373346
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -2)
@@ -469,3 +471,6 @@ shape = SubResource("CapsuleShape2D_74y5l")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 target_position = Vector2(121, 0)
+
+[node name="BTPlayer" type="BTPlayer" parent="."]
+blackboard_plan = SubResource("BlackboardPlan_u5j0i")

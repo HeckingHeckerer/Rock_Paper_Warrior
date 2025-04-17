@@ -1,4 +1,5 @@
 join Merchant/Wizard_Merchant left
 Merchant/Wizard_Merchant: Hello!
 Merchant/Wizard_Merchant: Welcome, i sell a variety of goods, see, have a look!
+
 [signal arg="exit_merchant_w"]
