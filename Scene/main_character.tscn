@@ -1,7 +1,8 @@
-[gd_scene load_steps=86 format=3 uid="uid://dbvvwwj16ctcg"]
+[gd_scene load_steps=88 format=3 uid="uid://dbvvwwj16ctcg"]
 
 [ext_resource type="Script" uid="uid://dx7g2ctb1bbpy" path="res://Rock_Paper_Warrior/Scripts/For the Player/Final_Player.gd" id="1_628a5"]
 [ext_resource type="Texture2D" uid="uid://14uq5pq8kanf" path="res://Assets/Characters/Main char/Colour2/Outline/120x80_PNGSheets/_Idle.png" id="2_6qo8a"]
+[ext_resource type="Texture2D" uid="uid://6i80yrjagvj5" path="res://Assets/Characters/Main char/Colour2/Outline/120x80_PNGSheets/_Hit.png" id="3_628a5"]
 [ext_resource type="Texture2D" uid="uid://c5tcuyht8nxrw" path="res://Assets/Characters/Main char/Colour2/Outline/120x80_PNGSheets/_Attack2.png" id="3_v7x3g"]
 [ext_resource type="Texture2D" uid="uid://cp7hetd88dhps" path="res://Assets/Characters/Main char/Colour2/Outline/120x80_PNGSheets/_CrouchTransition.png" id="4_mbnys"]
 [ext_resource type="Texture2D" uid="uid://darkd10yp7ak6" path="res://Assets/Characters/Main char/Colour2/Outline/120x80_PNGSheets/_Attack.png" id="4_x3r51"]
@@ -54,6 +55,10 @@ region = Rect2(960, 0, 115, 80)
 [sub_resource type="AtlasTexture" id="AtlasTexture_x5pw8"]
 atlas = ExtResource("2_6qo8a")
 region = Rect2(1080, 0, 115, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lkg3s"]
+atlas = ExtResource("3_628a5")
+region = Rect2(0, 0, 120, 80)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g31sh"]
 atlas = ExtResource("3_v7x3g")
@@ -333,6 +338,14 @@ animations = [{
 "speed": 9.0
 }, {
 "frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lkg3s")
+}],
+"loop": true,
+"name": &"Take_Hit",
+"speed": 5.0
+}, {
+"frames": [{
 "duration": 1.8,
 "texture": SubResource("AtlasTexture_g31sh")
 }, {
@@ -574,7 +587,7 @@ script = ExtResource("1_628a5")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-37, -41)
 sprite_frames = SubResource("SpriteFrames_13fa7")
-animation = &"Idle"
+animation = &"attack"
 autoplay = "Idle"
 offset = Vector2(-2.5, 0)
 
@@ -586,3 +599,11 @@ shape = ExtResource("12_4aw1v")
 [node name="wall slide timer" type="Timer" parent="."]
 
 [node name="play roll timer" type="Timer" parent="."]
+
+[node name="Deal dmg to enemy" type="Area2D" parent="."]
+
+[node name="Crouch" type="CollisionPolygon2D" parent="Deal dmg to enemy"]
+polygon = PackedVector2Array(-29, -2, -15, -2, -6, -8, 0, -15, -10, -24, -32, -23, -34, -17, -36, -3, -33, -2)
+
+[node name="Standing" type="CollisionPolygon2D" parent="Deal dmg to enemy"]
+polygon = PackedVector2Array(-1, -14, 7, -18, 4, -34, -15, -39, -27, -41, -31, -31, -31, -21, -31, -14)

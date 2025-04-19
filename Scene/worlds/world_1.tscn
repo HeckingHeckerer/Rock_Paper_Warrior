@@ -762,7 +762,7 @@ shape = SubResource("CapsuleShape2D_r1b57")
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_scale = Vector2(0, 1)
-motion_mirroring = Vector2(575, 0)
+motion_mirroring = Vector2(570, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
 position = Vector2(-1.00001, -118)
@@ -772,7 +772,7 @@ centered = false
 
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_scale = Vector2(0.5, 1)
-motion_mirroring = Vector2(575, 0)
+motion_mirroring = Vector2(570, 0)
 
 [node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
 position = Vector2(-7.62939e-06, -115)
@@ -781,7 +781,7 @@ texture = ExtResource("5_r1b57")
 centered = false
 
 [node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_mirroring = Vector2(575, 0)
+motion_mirroring = Vector2(570, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3"]
 position = Vector2(1, -118)

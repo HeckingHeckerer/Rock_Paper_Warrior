@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+class_name Player
 @onready var animatedsprite = $AnimatedSprite2D
 @export var speed = 165
 @export var jump_force = -330
@@ -15,10 +16,18 @@ var standing_cshape = preload("res://Rock_Paper_Warrior/Resources/mc_standing_id
 var crouching_cshape = preload("res://Rock_Paper_Warrior/Resources/mc_crouch_idle_cshape.tres")
 
 var main_sm : LimboHSM
-var direction : float
+var direction : float 
+
+#attack system:
+enum WeaponType { ROCK, PAPER, SCISSORS }
+var current_weapon: WeaponType = WeaponType.SCISSORS  # Default weapon
+var current_attack : bool
+
+@onready var deal_dmg_to_enemy: Area2D = $"Deal dmg to enemy"
 
 func _ready():
 	initiate_state_machine()
+	current_attack = false
 
 
 func _physics_process(delta: float) -> void:
@@ -62,6 +71,21 @@ func flip_sprite(direction):
 		animatedsprite.flip_h = true
 		
 func _unhandled_input(event: InputEvent):
+	
+	
+	
+	#============WEAPON HANDKING================
+	
+	if event.is_action_pressed("Rock"):
+		current_weapon = WeaponType.ROCK
+		print("Switched to ROCK weapon")
+	elif event.is_action_pressed("Paper"):
+		current_weapon = WeaponType.PAPER
+		print("Switched to PAPER weapon")
+	elif event.is_action_pressed("Scissors"):
+		current_weapon = WeaponType.SCISSORS
+		print("Switched to SCISSORS weapon")
+		
 	if event.is_action_pressed("crouch_idle"):
 		main_sm.dispatch(&"to_crouch")
 	elif event.is_action_pressed("crouch_idle") and abs(Input.get_axis("left", "right")) > 0.1:
@@ -298,18 +322,35 @@ func fall_update(delta : float):
 	
 	
 func attack_start():
-
+	current_attack = true 
 	var random_chance = randf()
 	
 	
-		
+	#DIFFERENT WEAPON TYPE ANIMATIONS
+	match current_weapon:
+		WeaponType.ROCK:
+			if random_chance < 0.5:
+				animatedsprite.play("rock_attack_1")
+				print("ROCK1")
+			else:
+				animatedsprite.play("rock_attack_2")
+				print("ROCK2")
+		WeaponType.PAPER:
+			if random_chance < 0.5:
+				animatedsprite.play("paper_attack_1")
+				print("PAPER1")
+			else:
+				animatedsprite.play("paper_attack_2")
+				print("PAPER2")
+		WeaponType.SCISSORS:
+			if random_chance < 0.5:
+				animatedsprite.play("attack")
+				print("SCIRROS1")
+			else:
+				animatedsprite.play("attack_2")
+				print("SCIRROS2")
 	# 50% chance for each animation
-	if random_chance < 0.5:
-		animatedsprite.play("attack")
-		
 	
-	else:
-		animatedsprite.play("attack_2")
 	
 	if is_on_floor() and Input.is_action_pressed("crouch_idle"):
 		animatedsprite.play("crouch_attack")
@@ -339,20 +380,24 @@ func attack_update(delta : float):
 		#main_sm.dispatch(&"state_ended")
 	
 	
-	if animatedsprite.animation != "attack" and animatedsprite.animation != "attack_2" and animatedsprite.animation != "crouch_attack" :
-		main_sm.dispatch(&"state_ended")
+	#if animatedsprite.animation != "attack" and animatedsprite.animation != "attack_2" and animatedsprite.animation != "crouch_attack" :
+		#current_attack = false 
+		#main_sm.dispatch(&"state_ended")
 	
 		
 func _on_attack_finished():
-	if animatedsprite.animation == "attack" :  # Ensure it's the attack animation that finished
-		print("Attack animation finished, returning to idle")
-		main_sm.dispatch(&"state_ended")  # Go back to idle state
-	elif animatedsprite.animation == "attack_2":
-		print("Attack_TWO animation finished, returning to idle")
-		main_sm.dispatch(&"state_ended")
-	elif animatedsprite.animation == "crouch_attack":
-		print("crouch_attack animation finished, returning to idle")
-		main_sm.dispatch(&"to_crouch")
+	if current_attack:
+		current_attack = false
+		match animatedsprite.animation:
+			"attack":
+				print("Attack animation finished, returning to idle")
+				main_sm.dispatch(&"state_ended")
+			"attack_2":
+				print("Attack_TWO animation finished, returning to idle")
+				main_sm.dispatch(&"state_ended")
+			"crouch_attack":
+				print("Crouch attack animation finished, returning to crouch")
+				main_sm.dispatch(&"to_crouch")
 		
 	
 	
