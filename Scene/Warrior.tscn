@@ -457,13 +457,16 @@ height = 46.0
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_u5j0i"]
 
 [node name="BossBandit" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 12
 script = ExtResource("1_u5j0i")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_y0rju")
-animation = &"fall"
+animation = &"Idle"
 autoplay = "Idle"
-frame_progress = 0.373346
+frame = 1
+frame_progress = 0.241446
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -2)

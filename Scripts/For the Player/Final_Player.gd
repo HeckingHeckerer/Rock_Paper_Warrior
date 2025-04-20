@@ -6,6 +6,7 @@ class_name Player
 @export var jump_force = -330
 const crouch_speed = 60
 const atk_speed = 100
+const stone_atk_speed = 20
 const sprint_speed = 300
 const wall_slide_gravity = 100 #A cool mechanic if u set this to 0 it will stick to the wall
 
@@ -23,87 +24,98 @@ enum WeaponType { ROCK, PAPER, SCISSORS }
 var current_weapon: WeaponType = WeaponType.SCISSORS  # Default weapon
 var current_attack : bool
 
+#player health
+var health = 100
+var health_max = 100 
+var health_min = 0
+var can_take_damage : bool
+var dead: bool
+
+#Player Damage Object feature
+var invulnerable_time = 0.5  # Seconds after being hit where player can't take damage
+var invulnerable_timer = 0.0
+var is_invulnerable = false
+
 @onready var deal_dmg_to_enemy: Area2D = $"Deal dmg to enemy"
 
 func _ready():
 	initiate_state_machine()
 	current_attack = false
-
-
+	dead = false
+	can_take_damage = true
+	animatedsprite.animation_finished.connect(_on_death_animation_finished)
 func _physics_process(delta: float) -> void:
-	#print(main_sm.get_active_state())
 	
+	
+			
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 
 	# Handle jump.
-	if Input.is_action_just_pressed("up") and is_on_floor():
-		velocity.y = jump_force
+	#if Input.is_action_just_pressed("up") and is_on_floor():
+		#velocity.y = jump_force
 
 	
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	#var direction := Input.get_axis("left", "right")
-	#
-	#if direction:
-		#velocity.x = direction * speed
-	#else:
-		#velocity.x = move_toward(velocity.x, 0, speed)
 		
 	main_sm.update(delta)
 		
-	
-
-	
-	
-	
+	Globals.playerDamageZone = deal_dmg_to_enemy
 	move_and_slide()
 
+#Combat System
+
+			
+
+	
+
+	
 func player():
 	pass
 	
 func flip_sprite(direction):
 	if direction == 1:
 		animatedsprite.flip_h = false
-		
+		deal_dmg_to_enemy.scale.x = 1
+		deal_dmg_to_enemy.position.x = -1
 	elif direction == -1:
 		animatedsprite.flip_h = true
-		
+		deal_dmg_to_enemy.scale.x = -1
+		deal_dmg_to_enemy.position.x = -77
 func _unhandled_input(event: InputEvent):
 	
+	if !dead:
 	
-	
-	#============WEAPON HANDKING================
-	
-	if event.is_action_pressed("Rock"):
-		current_weapon = WeaponType.ROCK
-		print("Switched to ROCK weapon")
-	elif event.is_action_pressed("Paper"):
-		current_weapon = WeaponType.PAPER
-		print("Switched to PAPER weapon")
-	elif event.is_action_pressed("Scissors"):
-		current_weapon = WeaponType.SCISSORS
-		print("Switched to SCISSORS weapon")
+		#============WEAPON HANDKING================
 		
-	if event.is_action_pressed("crouch_idle"):
-		main_sm.dispatch(&"to_crouch")
-	elif event.is_action_pressed("crouch_idle") and abs(Input.get_axis("left", "right")) > 0.1:
-		main_sm.dispatch(&"to_crouch_walk")
-	elif event.is_action_released("crouch_idle"):
-		main_sm.dispatch(&"state_ended")
-		
-	if event.is_action_pressed("up"):
-		main_sm.dispatch(&"to_jump")
-		
-	if event.is_action_pressed("sprint") and abs(Input.get_axis("left", "right")) > 0.1:
-		main_sm.dispatch(&"to_sprint")
-		
-	if event.is_action_pressed("left") or  event.is_action_pressed("right"):
-		main_sm.dispatch(&"to_walk")
-		
-	if event.is_action_pressed("attack"):
-		main_sm.dispatch(&"to_attack")
+		if event.is_action_pressed("Rock"):
+			current_weapon = WeaponType.ROCK
+			print("Switched to ROCK weapon")
+		elif event.is_action_pressed("Paper"):
+			current_weapon = WeaponType.PAPER
+			print("Switched to PAPER weapon")
+		elif event.is_action_pressed("Scissors"):
+			current_weapon = WeaponType.SCISSORS
+			print("Switched to SCISSORS weapon")
+			
+		if event.is_action_pressed("crouch_idle"):
+			main_sm.dispatch(&"to_crouch")
+		elif event.is_action_pressed("crouch_idle") and abs(Input.get_axis("left", "right")) > 0.1:
+			main_sm.dispatch(&"to_crouch_walk")
+		elif event.is_action_released("crouch_idle"):
+			main_sm.dispatch(&"state_ended")
+			
+		if event.is_action_pressed("up"):
+			main_sm.dispatch(&"to_jump")
+			
+		if event.is_action_pressed("sprint") and abs(Input.get_axis("left", "right")) > 0.1:
+			main_sm.dispatch(&"to_sprint")
+			
+		if event.is_action_pressed("left") or  event.is_action_pressed("right"):
+			main_sm.dispatch(&"to_walk")
+			
+		if event.is_action_pressed("attack"):
+			main_sm.dispatch(&"to_attack")
 	
 	
 	
@@ -139,7 +151,9 @@ func initiate_state_machine(): #starts the state machine
 	var wall_slide_state = LimboState.new().named("wall_slide").call_on_enter(wall_slide_start).call_on_update(wall_slide_update)
 	var fall_state = LimboState.new().named("fall").call_on_enter(fall_start).call_on_update(fall_update)
 	var crouch_walk_state = LimboState.new().named("crouch_walk").call_on_enter(crouch_walk_start).call_on_update(crouch_walk_update)
-
+	var death_state = LimboState.new().named("death").call_on_enter(death_start).call_on_update(death_update)
+	var take_hit = LimboState.new().named("take_hit").call_on_enter(take_hit_start).call_on_update(take_hit_update)
+	
 	#add the child states
 	main_sm.add_child(idle_state)
 	main_sm.add_child(walk_state)
@@ -150,6 +164,8 @@ func initiate_state_machine(): #starts the state machine
 	main_sm.add_child(sprint_state)
 	main_sm.add_child(wall_slide_state)
 	main_sm.add_child(fall_state)
+	main_sm.add_child(death_state)
+	main_sm.add_child(take_hit)
 	
 	
 	main_sm.initial_state = idle_state
@@ -195,6 +211,10 @@ func initiate_state_machine(): #starts the state machine
 	main_sm.add_transition(crouch_state, idle_state, &"state_ended")
 	main_sm.add_transition(crouch_walk_state, walk_state, &"state_ended")
 	
+	main_sm.add_transition(main_sm.ANYSTATE, take_hit, &"to_take_hit")
+	main_sm.add_transition(main_sm.ANYSTATE, death_state, &"to_die")
+	
+	
 	
 	
 	
@@ -221,7 +241,8 @@ func idle_update(delta : float):
 		
 	if Input.is_action_pressed("crouch_idle"):
 		main_sm.dispatch(&"to_crouch")
-		
+	
+	
 	
 		
 
@@ -257,7 +278,7 @@ func walk_update(delta : float):
 			main_sm.dispatch(&"to_crouch_walk")
 		else:
 			main_sm.dispatch(&"to_crouch")
-
+	
 
 func jump_start():
 	animatedsprite.play("jump")
@@ -324,23 +345,24 @@ func fall_update(delta : float):
 func attack_start():
 	current_attack = true 
 	var random_chance = randf()
-	
-	
+	var attack_weapon := current_weapon #this insures that the animation and damage stays locked in
+	toggle_attack_cols()
+	set_damage(attack_weapon)
 	#DIFFERENT WEAPON TYPE ANIMATIONS
-	match current_weapon:
+	match attack_weapon:
 		WeaponType.ROCK:
 			if random_chance < 0.5:
-				animatedsprite.play("rock_attack_1")
+				animatedsprite.play("bash_attack_1")
 				print("ROCK1")
 			else:
-				animatedsprite.play("rock_attack_2")
+				animatedsprite.play("bash_attack_2")
 				print("ROCK2")
 		WeaponType.PAPER:
 			if random_chance < 0.5:
-				animatedsprite.play("paper_attack_1")
+				animatedsprite.play("attack")
 				print("PAPER1")
 			else:
-				animatedsprite.play("paper_attack_2")
+				animatedsprite.play("attack")
 				print("PAPER2")
 		WeaponType.SCISSORS:
 			if random_chance < 0.5:
@@ -370,8 +392,11 @@ func attack_update(delta : float):
 	direction = Input.get_axis("left", "right")
 	
 	flip_sprite(direction)
-	if animatedsprite.animation == "attack" or animatedsprite.animation == "attack_2":
+	if animatedsprite.animation == "attack" or animatedsprite.animation == "attack_2" :
 		velocity.x = direction * atk_speed
+	elif  animatedsprite.animation == "bash_attack_1" or animatedsprite.animation == "bash_attack_2":
+		velocity.x = direction * stone_atk_speed
+		
 		
 	else:
 		velocity.x = direction * crouch_speed
@@ -395,13 +420,60 @@ func _on_attack_finished():
 			"attack_2":
 				print("Attack_TWO animation finished, returning to idle")
 				main_sm.dispatch(&"state_ended")
+			"bash_attack_1":
+				print("Rock1 animation finished, returning to idle")
+				main_sm.dispatch(&"state_ended")
+			"bash_attack_2":
+				print("Rock2 animation finished, returning to idle")
+				main_sm.dispatch(&"state_ended")
+			"paper_attack_1":
+				print("paper_attack_1 animation finished, returning to idle")
+				main_sm.dispatch(&"state_ended")
+			"paper_attack_2":
+				print("paper_attack_1 animation finished, returning to idle")
+				main_sm.dispatch(&"state_ended")
 			"crouch_attack":
 				print("Crouch attack animation finished, returning to crouch")
+				
 				main_sm.dispatch(&"to_crouch")
 		
 	
+func toggle_attack_cols():
+	var damaga_coll_stand = deal_dmg_to_enemy.get_node("standing")
+	var damaga_coll_crouch = deal_dmg_to_enemy.get_node("crouching")
+	var wait_time : float
+	var active_collider : CollisionShape2D
 	
+	
+	
+	if current_attack:
+		wait_time = 0.4
 
+	# Determine which one to enable based on current input
+	if is_on_floor() and Input.is_action_pressed("crouch_idle"):
+		damaga_coll_crouch.disabled = false
+		active_collider = damaga_coll_crouch
+	else:
+		damaga_coll_stand.disabled = false
+		active_collider = damaga_coll_stand
+	
+	await get_tree().create_timer(wait_time).timeout
+
+	# Disable the one we previously activated
+	active_collider.disabled = true
+	
+func set_damage(weapon: WeaponType):
+	var current_damage : int
+	match current_weapon:
+		WeaponType.ROCK:
+			current_damage = 15
+		WeaponType.PAPER:
+			current_damage = 8
+		WeaponType.SCISSORS:
+			current_damage = 10
+			
+	Globals.playerDamageAmount = current_damage
+		
 func crouch_start():
 	animatedsprite.play("crouch_idle")
 	_crouching_cshape()
@@ -483,4 +555,58 @@ func wall_slide_update(delta : float):
 	pass
 
 
+func take_hit_start():
+	animatedsprite.play("take_hit")
+	# Apply knockback
+	velocity.y = -150  # Small knockback upwards
+	velocity.x = -100 * direction  # Knockback opposite facing direction
+	print("Entered take_hit state")
 	
+func take_hit_update(delta):
+	# Count down invulnerability timer
+	invulnerable_timer -= delta
+	if invulnerable_timer <= 0:
+		is_invulnerable = false
+		main_sm.dispatch(&"state_ended")  # Return to previous state
+
+	
+func take_damage(damage):
+	if is_invulnerable or dead:
+		return
+		
+	health -= damage
+	print("Player took ", damage, " damage. Health: ", health)
+	
+	# Invulnerability frames
+	is_invulnerable = true
+	invulnerable_timer = invulnerable_time
+	
+	# Dispatch to appropriate state
+	if health > 0:
+		main_sm.dispatch(&"to_take_hit")
+	else:
+		main_sm.dispatch(&"to_die")
+
+func check_hitbox():
+	if is_invulnerable or dead:
+		return
+		
+	var hitbox_areas = $PlayerHitbox.get_overlapping_areas()
+	if hitbox_areas:
+		take_damage(50)  # 50 damage per hit
+		
+func death_start():
+	dead = true
+	can_take_damage = false
+	animatedsprite.play("death")
+	velocity = Vector2.ZERO  # Stop all movement
+	print("Entered death state")
+	
+func death_update():
+	pass
+	
+func _on_death_animation_finished():
+	if animatedsprite.animation == "death":
+		# Reload current scene after death animation
+		await get_tree().create_timer(0.5).timeout
+		get_tree().reload_current_scene()

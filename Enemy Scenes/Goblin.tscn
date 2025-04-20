@@ -1,8 +1,9 @@
-[gd_scene load_steps=58 format=3 uid="uid://dvjbxvjafeekp"]
+[gd_scene load_steps=62 format=3 uid="uid://dvjbxvjafeekp"]
 
 [ext_resource type="Texture2D" uid="uid://bs2c1vlvo8fsi" path="res://Assets/Enemies/Monster_Creatures_Fantasy(Version 1.3)/Goblin/Attack3.png" id="1_8dxqe"]
 [ext_resource type="Texture2D" uid="uid://chb8qoqfup36e" path="res://Assets/Enemies/Monsters_Creatures_Fantasy/Goblin/Idle.png" id="1_f8mbh"]
 [ext_resource type="Texture2D" uid="uid://7bqg24djg14f" path="res://Assets/Enemies/Monsters_Creatures_Fantasy/Goblin/Attack.png" id="1_otr3c"]
+[ext_resource type="Script" uid="uid://dw0awpstj5ja7" path="res://Rock_Paper_Warrior/Scripts/Goblin/goblin.gd" id="1_yw2sy"]
 [ext_resource type="Texture2D" uid="uid://bergao6os6lug" path="res://Assets/Enemies/Monster_Creatures_Fantasy(Version 1.2)/Goblin/Attack2.png" id="3_ypdxa"]
 [ext_resource type="Texture2D" uid="uid://caftwqdw3jjur" path="res://Assets/Enemies/Monsters_Creatures_Fantasy/Goblin/Death.png" id="5_c0mbf"]
 [ext_resource type="Texture2D" uid="uid://c4epjpcko88dv" path="res://Assets/Enemies/Monsters_Creatures_Fantasy/Goblin/Run.png" id="6_yw2sy"]
@@ -227,7 +228,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_g4veo")
 }],
-"loop": true,
+"loop": false,
 "name": &"Attack_1",
 "speed": 12.0
 }, {
@@ -268,18 +269,18 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_uyf0c")
 }],
-"loop": true,
+"loop": false,
 "name": &"Attack_bomb",
 "speed": 12.0
 }, {
 "frames": [{
-"duration": 0.7,
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_0yq2s")
 }, {
-"duration": 0.7,
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_o7vy6")
 }, {
-"duration": 0.7,
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_rqpew")
 }, {
 "duration": 0.6,
@@ -297,7 +298,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_onstn")
 }],
-"loop": true,
+"loop": false,
 "name": &"Dodge_attack",
 "speed": 8.0
 }, {
@@ -331,7 +332,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hnbn2")
 }],
-"loop": true,
+"loop": false,
 "name": &"death",
 "speed": 5.0
 }, {
@@ -377,20 +378,59 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_i5pje")
 }],
-"loop": true,
+"loop": false,
 "name": &"take_hit",
 "speed": 5.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_c0mbf"]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yw2sy"]
+radius = 13.0
+height = 40.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_s2swo"]
+radius = 17.3509
+height = 77.987
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7xgd3"]
+radius = 14.968
+height = 63.7326
+
 [node name="goblin" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 12
+script = ExtResource("1_yw2sy")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_r21xl")
-animation = &"Attack_1"
+animation = &"Dodge_attack"
 autoplay = "Idle"
+frame = 7
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, 10)
 shape = SubResource("CapsuleShape2D_c0mbf")
+
+[node name="GobHitbox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 12
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GobHitbox"]
+position = Vector2(1, 9)
+shape = SubResource("CapsuleShape2D_yw2sy")
+
+[node name="Gob_deal_dmg" type="Area2D" parent="."]
+
+[node name="sword" type="CollisionShape2D" parent="Gob_deal_dmg"]
+position = Vector2(1, 7)
+rotation = 2.01056
+shape = SubResource("CapsuleShape2D_s2swo")
+
+[node name="dodge_atk" type="CollisionShape2D" parent="Gob_deal_dmg"]
+position = Vector2(38, 12)
+rotation = 1.63618
+shape = SubResource("CapsuleShape2D_7xgd3")
+
+[connection signal="area_entered" from="GobHitbox" to="." method="_on_gob_hitbox_area_entered"]

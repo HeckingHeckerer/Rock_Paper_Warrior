@@ -23,7 +23,7 @@
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_so0u1"]
 distance = 157.0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_l14o8"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nbfoq"]
 texture = ExtResource("2_jhpr0")
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -577,8 +577,9 @@ texture = ExtResource("2_jhpr0")
 14:10/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
 [sub_resource type="TileSet" id="TileSet_da0ug"]
-physics_layer_0/collision_layer = 1
-sources/0 = SubResource("TileSetAtlasSource_l14o8")
+physics_layer_0/collision_layer = 4
+physics_layer_0/collision_mask = 3
+sources/0 = SubResource("TileSetAtlasSource_nbfoq")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_inoe5"]
 atlas = ExtResource("16_inoe5")
@@ -694,6 +695,8 @@ position = Vector2(-222, 68)
 scale = Vector2(0.345, 0.345)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 4
+collision_mask = 3
 
 [node name="Bottom world border" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(-13, 304)
