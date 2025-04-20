@@ -1,12 +1,5 @@
 extends Node2D
 
-
-
-
-
-
-
-
 func _on_transition_body_entered(body):
 	if body is Player:
 		#transition_scene.play("fade_in")
@@ -18,5 +11,5 @@ func _on_damage_objects_body_entered(body: Node2D) -> void:
 	if body is Player:
 		var player = body as Player
 		if player.can_take_damage and not player.dead:
-			player.take_damage(50)
+			player.take_damage(40)
 		

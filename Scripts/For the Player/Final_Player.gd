@@ -32,8 +32,8 @@ var can_take_damage : bool
 var dead: bool
 
 #Player Damage Object feature
-var invulnerable_time = 0.5  # Seconds after being hit where player can't take damage
-var invulnerable_timer = 0.0
+var invulnerable_time = 0.8  # Seconds after being hit where player can't take damage
+var invulnerable_timer = 0.5
 var is_invulnerable = false
 
 @onready var deal_dmg_to_enemy: Area2D = $"Deal dmg to enemy"
@@ -151,7 +151,7 @@ func initiate_state_machine(): #starts the state machine
 	var wall_slide_state = LimboState.new().named("wall_slide").call_on_enter(wall_slide_start).call_on_update(wall_slide_update)
 	var fall_state = LimboState.new().named("fall").call_on_enter(fall_start).call_on_update(fall_update)
 	var crouch_walk_state = LimboState.new().named("crouch_walk").call_on_enter(crouch_walk_start).call_on_update(crouch_walk_update)
-	var death_state = LimboState.new().named("death").call_on_enter(death_start).call_on_update(death_update)
+	var death_state = LimboState.new().named("death").call_on_enter(death_start)
 	var take_hit = LimboState.new().named("take_hit").call_on_enter(take_hit_start).call_on_update(take_hit_update)
 	
 	#add the child states
@@ -447,7 +447,7 @@ func toggle_attack_cols():
 	
 	
 	if current_attack:
-		wait_time = 0.4
+		wait_time = 0.3
 
 	# Determine which one to enable based on current input
 	if is_on_floor() and Input.is_action_pressed("crouch_idle"):
@@ -602,8 +602,7 @@ func death_start():
 	velocity = Vector2.ZERO  # Stop all movement
 	print("Entered death state")
 	
-func death_update():
-	pass
+
 	
 func _on_death_animation_finished():
 	if animatedsprite.animation == "death":
