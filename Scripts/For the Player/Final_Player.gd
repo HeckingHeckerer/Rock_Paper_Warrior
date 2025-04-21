@@ -466,7 +466,7 @@ func set_damage(weapon: WeaponType):
 	var current_damage : int
 	match current_weapon:
 		WeaponType.ROCK:
-			current_damage = 15
+			current_damage = 20
 		WeaponType.PAPER:
 			current_damage = 8
 		WeaponType.SCISSORS:

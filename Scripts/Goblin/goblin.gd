@@ -15,6 +15,10 @@ var coins = randi_range(30, 90)
 # State Machine
 var main_sm : LimboHSM
 
+# Movement
+@export var move_speed: float = 165
+@export var move_tolerance: float = 10
+var current_direction: int = 1
 
 
 
@@ -24,13 +28,27 @@ func _ready():
 	goblin_animated.animation_finished.connect(_on_animation_finished)
 	
 func _physics_process(delta: float) -> void:
-	flip_sprite(-1)
+	
 	Globals.gob_DamageAmount = damage_to_deal
 	Globals.gob_DamageZone = $Gob_deal_dmg
 	
 	if not dead:
 		velocity += get_gravity() * delta
 		move_and_slide()
+		
+# Movement function called by BTAction
+func move(dir: int, speed: float):
+	if dead: return
+	
+	current_direction = dir
+	flip_sprite(dir)
+	
+	if speed > 0:
+		main_sm.dispatch(&"to_move")
+		velocity.x = dir * speed
+	else:
+		main_sm.dispatch(&"to_idle")
+		velocity.x = 0
 	
 func flip_sprite(dir):
 	if dir > 0:
@@ -46,12 +64,14 @@ func initiate_state_machine():
 	
 	# Define states
 	var idle_state = LimboState.new().named("idle").call_on_enter(idle_start)
+	var move_state = LimboState.new().named("move").call_on_enter(move_start).call_on_update(move_update)
 	var take_hit_state = LimboState.new().named("take_hit").call_on_enter(take_hit_start)
 	var death_state = LimboState.new().named("death").call_on_enter(death_start)
 	var chase_state = LimboState.new().named("chase").call_on_enter(chase_start).call_on_update(chase_update)
 	
 	# Add states
 	main_sm.add_child(idle_state)
+	main_sm.add_child(move_state)
 	main_sm.add_child(take_hit_state)
 	main_sm.add_child(death_state)
 	main_sm.add_child(chase_state)
@@ -65,6 +85,8 @@ func initiate_state_machine():
 	main_sm.add_transition(take_hit_state, idle_state, &"state_ended")
 	main_sm.add_transition(idle_state, chase_state, &"to_chase")
 	main_sm.add_transition(chase_state, idle_state, &"to_roam")
+	main_sm.add_transition(idle_state, move_state, &"to_move")
+	main_sm.add_transition(move_state, idle_state, &"to_idle")
 	
 	main_sm.initialize(self)
 	main_sm.set_active(true)
@@ -73,6 +95,13 @@ func initiate_state_machine():
 func idle_start():
 	if not dead:
 		goblin_animated.play("idle")
+
+func move_start():
+	if not dead:
+		goblin_animated.play("run")
+
+func move_update(delta: float):
+	pass  # Movement is handled in physics_process via move() function
 
 func take_hit_start():
 	if not dead:
