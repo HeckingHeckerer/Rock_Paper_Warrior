@@ -1,17 +1,27 @@
 extends CharacterBody2D
 
+
+
+
 class_name Player
+#fire ball
+@export var paper_projectile_scene: PackedScene
+
+
 @onready var animatedsprite = $AnimatedSprite2D
 @export var speed = 165
 @export var jump_force = -330
 const crouch_speed = 60
 const atk_speed = 100
 const stone_atk_speed = 20
-const sprint_speed = 300
-const wall_slide_gravity = 100 #A cool mechanic if u set this to 0 it will stick to the wall
+const sprint_speed = 250
+
+const roll_speed = 300  # Adjust this value to control how fast the roll is
+const roll_duration = 0.4  # Duration of the roll in seconds
+
 
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
-#@onready var wall_slide_timer: Timer = $"wall slide timer"
+
 
 var standing_cshape = preload("res://Rock_Paper_Warrior/Resources/mc_standing_idle_cshape.tres")
 var crouching_cshape = preload("res://Rock_Paper_Warrior/Resources/mc_crouch_idle_cshape.tres")
@@ -25,18 +35,35 @@ var current_weapon: WeaponType = WeaponType.SCISSORS  # Default weapon
 var current_attack : bool
 
 #player health
-var health = 100
+var health = 100:
+	set(new_health):
+		health = clamp(new_health, 0, health_max)
+		health_changed.emit(health)  # Emit when health changes
+
+
 var health_max = 100 
 var health_min = 0
 var can_take_damage : bool
 var dead: bool
+
+var mana_max = 70
+var mana_min = 0
+
 
 #Player Damage Object feature
 var invulnerable_time = 0.8  # Seconds after being hit where player can't take damage
 var invulnerable_timer = 0.5
 var is_invulnerable = false
 
+#toggle crouch
+var is_crouching : bool = false
+
+
 @onready var deal_dmg_to_enemy: Area2D = $"Deal dmg to enemy"
+
+
+signal health_changed(new_health)  # Add with your other signals
+
 
 func _ready():
 	initiate_state_machine()
@@ -44,6 +71,16 @@ func _ready():
 	dead = false
 	can_take_damage = true
 	animatedsprite.animation_finished.connect(_on_death_animation_finished)
+	NavigationManager.on_trigger_player_spawn.connect(_on_spawn)
+	
+func _on_spawn(position: Vector2, direction: String):
+	global_position = position
+	
+	
+   
+
+
+	
 func _physics_process(delta: float) -> void:
 	
 	
@@ -100,6 +137,7 @@ func _unhandled_input(event: InputEvent):
 			
 		if event.is_action_pressed("crouch_idle"):
 			main_sm.dispatch(&"to_crouch")
+			
 		elif event.is_action_pressed("crouch_idle") and abs(Input.get_axis("left", "right")) > 0.1:
 			main_sm.dispatch(&"to_crouch_walk")
 		elif event.is_action_released("crouch_idle"):
@@ -116,6 +154,12 @@ func _unhandled_input(event: InputEvent):
 			
 		if event.is_action_pressed("attack"):
 			main_sm.dispatch(&"to_attack")
+			
+		if event.is_action_pressed("block"):
+			main_sm.dispatch(&"to_block")
+			
+		if is_on_floor() and event.is_action_pressed("roll"):  # Make sure to add "roll" to your input map
+			main_sm.dispatch(&"to_roll")
 	
 	
 	
@@ -153,6 +197,9 @@ func initiate_state_machine(): #starts the state machine
 	var crouch_walk_state = LimboState.new().named("crouch_walk").call_on_enter(crouch_walk_start).call_on_update(crouch_walk_update)
 	var death_state = LimboState.new().named("death").call_on_enter(death_start)
 	var take_hit = LimboState.new().named("take_hit").call_on_enter(take_hit_start).call_on_update(take_hit_update)
+	var block_state = LimboState.new().named("block").call_on_enter(block_start).call_on_update(block_update)
+	var roll_state = LimboState.new().named("roll").call_on_enter(roll_start).call_on_update(roll_update)
+	
 	
 	#add the child states
 	main_sm.add_child(idle_state)
@@ -166,7 +213,8 @@ func initiate_state_machine(): #starts the state machine
 	main_sm.add_child(fall_state)
 	main_sm.add_child(death_state)
 	main_sm.add_child(take_hit)
-	
+	main_sm.add_child(block_state)
+	main_sm.add_child(roll_state)
 	
 	main_sm.initial_state = idle_state
 	
@@ -215,9 +263,15 @@ func initiate_state_machine(): #starts the state machine
 	main_sm.add_transition(main_sm.ANYSTATE, death_state, &"to_die")
 	
 	
+	main_sm.add_transition(main_sm.ANYSTATE, block_state, &"to_block")
+	main_sm.add_transition(block_state, idle_state, &"state_ended")
 	
+	main_sm.add_transition(main_sm.ANYSTATE, roll_state, &"to_roll")
+	main_sm.add_transition(roll_state, idle_state, &"roll_ended")
 	
-	
+	main_sm.add_transition(idle_state, roll_state, &"to_roll")
+	main_sm.add_transition(walk_state, roll_state, &"to_roll")
+	main_sm.add_transition(sprint_state, roll_state, &"to_roll")
 	
 	main_sm.initialize(self)
 	main_sm.set_active(true)
@@ -226,6 +280,7 @@ func initiate_state_machine(): #starts the state machine
 func idle_start():
 	animatedsprite.play("Idle")
 	_standing_cshape()
+	Globals.is_invulnerable = false
 	print("entered idle")
 func idle_update(delta : float):
 	
@@ -359,10 +414,10 @@ func attack_start():
 				print("ROCK2")
 		WeaponType.PAPER:
 			if random_chance < 0.5:
-				animatedsprite.play("attack")
+				animatedsprite.play("paper_attack")
 				print("PAPER1")
 			else:
-				animatedsprite.play("attack")
+				animatedsprite.play("paper_attack")
 				print("PAPER2")
 		WeaponType.SCISSORS:
 			if random_chance < 0.5:
@@ -396,7 +451,8 @@ func attack_update(delta : float):
 		velocity.x = direction * atk_speed
 	elif  animatedsprite.animation == "bash_attack_1" or animatedsprite.animation == "bash_attack_2":
 		velocity.x = direction * stone_atk_speed
-		
+	elif  animatedsprite.animation == "paper_attack":
+		velocity.x = direction * atk_speed
 		
 	else:
 		velocity.x = direction * crouch_speed
@@ -426,12 +482,12 @@ func _on_attack_finished():
 			"bash_attack_2":
 				print("Rock2 animation finished, returning to idle")
 				main_sm.dispatch(&"state_ended")
-			"paper_attack_1":
+			"paper_attack":
 				print("paper_attack_1 animation finished, returning to idle")
 				main_sm.dispatch(&"state_ended")
-			"paper_attack_2":
-				print("paper_attack_1 animation finished, returning to idle")
-				main_sm.dispatch(&"state_ended")
+			#"paper_attack_2":
+				#print("paper_attack_1 animation finished, returning to idle")
+				#main_sm.dispatch(&"state_ended")
 			"crouch_attack":
 				print("Crouch attack animation finished, returning to crouch")
 				
@@ -454,13 +510,39 @@ func toggle_attack_cols():
 		damaga_coll_crouch.disabled = false
 		active_collider = damaga_coll_crouch
 	else:
-		damaga_coll_stand.disabled = false
-		active_collider = damaga_coll_stand
+		match current_weapon:
+			WeaponType.ROCK:
+				damaga_coll_stand.disabled = false
+				active_collider = damaga_coll_stand
+				
+			
+			WeaponType.SCISSORS:
+				damaga_coll_stand.disabled = false
+				active_collider = damaga_coll_stand
+				
+				
+			WeaponType.PAPER:
+				spawn_paper_projectile()
+				return  # Early return since we don't need collision for paper
 	
 	await get_tree().create_timer(wait_time).timeout
 
 	# Disable the one we previously activated
-	active_collider.disabled = true
+	if active_collider:
+		active_collider.disabled = true
+
+func spawn_paper_projectile():
+	if not paper_projectile_scene:
+		return
+	
+	var projectile = paper_projectile_scene.instantiate()
+	
+	# Set initial position and direction
+	projectile.spawnPos = global_position
+	projectile.dir = 1 if not animatedsprite.flip_h else -1
+	
+	# Add to scene
+	get_parent().add_child(projectile)
 	
 func set_damage(weapon: WeaponType):
 	var current_damage : int
@@ -473,12 +555,54 @@ func set_damage(weapon: WeaponType):
 			current_damage = 10
 			
 	Globals.playerDamageAmount = current_damage
+	
+func block_start():
+	var random_chance = randf()
+	if random_chance < 0.5:
+		animatedsprite.play("block_1")
+	else:
+		animatedsprite.play("block_2")
+	print("entered block state")
+	
+	# Reduce movement speed while blocking
+
+	velocity.x *= 0.2
+
+		
+	
+	# You might want to add some defensive properties here
+	# For example:
+	Globals.is_blocking = true
+	_standing_cshape()
+
+func block_update(delta: float):
+	# Check if block button is released
+	if not Input.is_action_pressed("block"):
+		main_sm.dispatch(&"state_ended")
+		Globals.is_blocking = false
+		return
+		
+	# Still allow some limited movement while blocking
+	direction = Input.get_axis("left", "right")
+	velocity.x = direction * (speed * 0)  # Reduced speed while blocking
+	flip_sprite(direction)
+	
+	# Can't attack while blocking
+	if Input.is_action_pressed("attack"):
+		return
+		
+	# Can transition to crouch block if needed
+	if Input.is_action_pressed("crouch_idle"):
+		# You might want to add a crouch_block state later
+		main_sm.dispatch(&"to_crouch")
 		
 func crouch_start():
-	animatedsprite.play("crouch_idle")
-	_crouching_cshape()
-	velocity.x = 0
-	print("entered crouch")
+	is_crouching = true
+	if is_crouching:
+		animatedsprite.play("crouch_idle")
+		_crouching_cshape()
+		velocity.x = 0
+		print("entered crouch")
 	
 func crouch_update(delta : float):
 	
@@ -548,6 +672,29 @@ func sprint_update(delta : float):
 			main_sm.dispatch(&"to_crouch_walk")
 		else:
 			main_sm.dispatch(&"to_crouch")
+			
+func roll_start():
+	animatedsprite.play("roll")
+	_crouching_cshape()  # Use crouching collision shape during roll
+	print("entered roll state")
+	
+	# Apply forward momentum based on facing direction
+	var roll_direction = 1 if !animatedsprite.flip_h else -1
+	velocity = Vector2(roll_direction * roll_speed, 0)
+	
+	# Set a timer to automatically end the roll after duration
+	await get_tree().create_timer(roll_duration).timeout
+	main_sm.dispatch(&"roll_ended")
+
+func roll_update(delta: float):
+	# Maintain horizontal velocity (gravity still affects vertical)
+	velocity.y += get_gravity().y * delta
+	
+	# You might want to add some invulnerability during roll
+	Globals.is_invulnerable = true
+	
+	# Prevent changing direction during roll
+	flip_sprite(1 if !animatedsprite.flip_h else -1)
 			
 func wall_slide_start():
 	pass

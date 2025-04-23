@@ -1,0 +1,55 @@
+[gd_scene load_steps=6 format=3 uid="uid://cap0s1erbw1ed"]
+
+[ext_resource type="Script" uid="uid://b8pnr6km68k55" path="res://Rock_Paper_Warrior/Scripts/UI/manabar.gd" id="1_g6wq8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bwk6u"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rr74g"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4j528"]
+bg_color = Color(0.18192, 0.102729, 0.081579, 1)
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
+shadow_color = Color(0, 0, 0, 0.27451)
+shadow_offset = Vector2(0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_45yt0"]
+bg_color = Color(1, 1, 1, 1)
+
+[node name="Manabar" type="ProgressBar"]
+modulate = Color(0.183333, 0, 1, 1)
+z_index = 1
+texture_filter = 1
+texture_repeat = 1
+offset_left = 69.0
+offset_top = 59.0
+offset_right = 469.0
+offset_bottom = 79.0
+theme_override_styles/background = SubResource("StyleBoxEmpty_bwk6u")
+theme_override_styles/fill = SubResource("StyleBoxFlat_rr74g")
+max_value = 70.0
+value = 70.0
+show_percentage = false
+script = ExtResource("1_g6wq8")
+
+[node name="Consumebaar" type="ProgressBar" parent="."]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_4j528")
+theme_override_styles/fill = SubResource("StyleBoxFlat_45yt0")
+max_value = 70.0
+value = 70.0
+show_percentage = false
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.7
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

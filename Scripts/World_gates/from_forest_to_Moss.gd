@@ -1,7 +1,9 @@
 extends Node2D
 
+
+
 func _ready() -> void:
-	MusicManager.play_music("wake_up_world")
+	MusicManager.play_music("world_1")
 	
 	
 	if NavigationManager.spawn_door_tag != null:
@@ -13,9 +15,5 @@ func _on_level_spawn(destination_tag:String):
 	NavigationManager.trigger_player_spawn(door.spawn.global_position, door.spawn_direction)
 
 
-func _on_damage_objects_body_entered(body: Node2D) -> void:
-	if body is Player:
-		var player = body as Player
-		if player.can_take_damage and not player.dead:
-			player.take_damage(40)
+
 		
