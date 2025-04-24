@@ -3,6 +3,7 @@ class_name Goblin_enemy
 
 
 @onready var goblin_animated: AnimatedSprite2D = $AnimatedSprite2D
+<<<<<<< HEAD
 
 
 
@@ -11,7 +12,9 @@ var attack_range = 50.0  # Distance to initiate attack
 var attack_cooldown = 1.5  # Time between attacks
 var can_attack = true
 var is_attacking = false
+=======
 @onready var gob_deal_dmg: Area2D = $Gob_deal_dmg
+>>>>>>> parent of d3cf17c (iyurewrstyhdftyukujrhtgrfe)
 
 # Stats
 var health = 50
@@ -20,24 +23,16 @@ var health_min = 0
 var dead = false
 var damage_to_deal = 20
 var coins = randi_range(30, 90)
-var jump_force = -350
 
 # State Machine
 var main_sm : LimboHSM
-
-# Raycasts
-@onready var detect_ray_cast: RayCast2D = $DetectRayCast
-@onready var attack_ray_cast: RayCast2D = $AttackRayCast
-
-@export var move_speed: float = 100
-@export var chase_speed: int = 150
-@export var acceleration: int = 200
-@onready var timer: Timer = $Timer
 
 # Movement
 @export var move_speed: float = 165
 @export var move_tolerance: float = 10
 var current_direction: int = 1
+
+
 
 func _ready():
 	# Initialize state machine
@@ -117,30 +112,37 @@ func initiate_state_machine():
 	add_child(main_sm)
 	
 	# Define states
+	var idle_state = LimboState.new().named("idle").call_on_enter(idle_start)
 	var move_state = LimboState.new().named("move").call_on_enter(move_start).call_on_update(move_update)
 	var take_hit_state = LimboState.new().named("take_hit").call_on_enter(take_hit_start)
 	var death_state = LimboState.new().named("death").call_on_enter(death_start)
 <<<<<<< HEAD
 
 	var attack_state = LimboState.new().named("attack").call_on_enter(attack_start)
+=======
 	var chase_state = LimboState.new().named("chase").call_on_enter(chase_start).call_on_update(chase_update)
+>>>>>>> parent of d3cf17c (iyurewrstyhdftyukujrhtgrfe)
 	
 	# Add states
 	main_sm.add_child(idle_state)
 	main_sm.add_child(move_state)
 	main_sm.add_child(take_hit_state)
 	main_sm.add_child(death_state)
+<<<<<<< HEAD
 	
 	main_sm.add_child(attack_state)
+=======
 	main_sm.add_child(chase_state)
+>>>>>>> parent of d3cf17c (iyurewrstyhdftyukujrhtgrfe)
 	
 	# Set initial state
+	main_sm.initial_state = idle_state
 	
 	# Transitions
 	main_sm.add_transition(main_sm.ANYSTATE, death_state, &"to_die")
-	main_sm.add_transition(main_sm.ANYSTATE, take_hit_state, &"to_take_hit")
 	main_sm.add_transition(idle_state, take_hit_state, &"to_take_hit")
 	main_sm.add_transition(take_hit_state, idle_state, &"state_ended")
+<<<<<<< HEAD
 	main_sm.add_transition(idle_state, move_state, &"to_roam")
 	
 	main_sm.add_transition(move_state, idle_state, &"to_idle")
@@ -148,11 +150,13 @@ func initiate_state_machine():
 	
 	main_sm.add_transition(attack_state, move_state, &"to_roam")
 	
+=======
 	main_sm.add_transition(idle_state, chase_state, &"to_chase")
 	main_sm.add_transition(chase_state, idle_state, &"to_roam")
 	main_sm.add_transition(idle_state, move_state, &"to_move")
 	main_sm.add_transition(move_state, idle_state, &"to_idle")
 	
+>>>>>>> parent of d3cf17c (iyurewrstyhdftyukujrhtgrfe)
 	main_sm.initialize(self)
 	main_sm.set_active(true)
 
@@ -167,6 +171,7 @@ func move_start():
 	if not dead:
 		goblin_animated.play("run")
 
+<<<<<<< HEAD
 func move_update(delta):
 	if dead:
 		return
@@ -187,8 +192,10 @@ func move_update(delta):
 
 
 
+=======
 func move_update(delta: float):
 	pass  # Movement is handled in physics_process via move() function
+>>>>>>> parent of d3cf17c (iyurewrstyhdftyukujrhtgrfe)
 
 func take_hit_start():
 	print("TAKE HIT GOBLIN")
@@ -198,14 +205,18 @@ func take_hit_start():
 func death_start():
 	print("TAKE HIT GOBLIN")
 	dead = true
+<<<<<<< HEAD
 	
 	
 	
 	
+=======
+>>>>>>> parent of d3cf17c (iyurewrstyhdftyukujrhtgrfe)
 	goblin_animated.play("death")
 	await get_tree().create_timer(2.0).timeout
 	queue_free()
 
+<<<<<<< HEAD
 func attack_start():
 	if dead or not can_attack:
 		return
@@ -233,10 +244,12 @@ func _on_attack_animation_finished():
 
 
 
+=======
 # Damage Handling
 func _on_gob_hitbox_area_entered(area: Area2D) -> void:
 	if area == Globals.playerDamageZone and not dead:
 		take_damage(Globals.playerDamageAmount)
+>>>>>>> parent of d3cf17c (iyurewrstyhdftyukujrhtgrfe)
 
 func take_damage(damage):
 	if dead: return
@@ -245,8 +258,11 @@ func take_damage(damage):
 	health = max(health, 0)
 	
 	if health <= 0:
+<<<<<<< HEAD
 		
 		
+=======
+>>>>>>> parent of d3cf17c (iyurewrstyhdftyukujrhtgrfe)
 		main_sm.dispatch(&"to_die")
 	else:
 		main_sm.dispatch(&"to_take_hit")
@@ -263,6 +279,7 @@ func chase_update(delta: float):
 
 # Animation Callback - This is where we handle the transition
 func _on_animation_finished():
+<<<<<<< HEAD
 	match goblin_animated.animation:
 		"take_hit":
 			if not dead:
@@ -287,6 +304,8 @@ func _on_damage_body_entered(body: Node2D) -> void:
 		if player.can_take_damage and not player.dead:
 		
 			player.take_damage(20)
+=======
 	if goblin_animated.animation == "take_hit" and not dead:
 		main_sm.dispatch(&"state_ended")
 		
+>>>>>>> parent of d3cf17c (iyurewrstyhdftyukujrhtgrfe)
