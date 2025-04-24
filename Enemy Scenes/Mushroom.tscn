@@ -1,43 +1,12 @@
-[gd_scene load_steps=44 format=3 uid="uid://vbunagii54t"]
+[gd_scene load_steps=47 format=3 uid="uid://vbunagii54t"]
 
 [ext_resource type="Texture2D" uid="uid://d26yk6nyywkuw" path="res://Assets/Enemies/Monsters_Creatures_Fantasy/Mushroom/Idle.png" id="1_6l8yu"]
+[ext_resource type="Script" uid="uid://cqal4fkqjm30a" path="res://Rock_Paper_Warrior/Scripts/Mushroom/mushroom.gd" id="1_32n6p"]
 [ext_resource type="Texture2D" uid="uid://bvsd05a1fvn17" path="res://Assets/Enemies/Monsters_Creatures_Fantasy/Mushroom/Attack.png" id="1_dylk1"]
 [ext_resource type="Texture2D" uid="uid://gaf3kmx27s0g" path="res://Assets/Enemies/Monster_Creatures_Fantasy(Version 1.2)/Mushroom/Attack2.png" id="2_rhbnm"]
 [ext_resource type="Texture2D" uid="uid://bvt08pvbrq18q" path="res://Assets/Enemies/Monsters_Creatures_Fantasy/Mushroom/Death.png" id="4_iwvf4"]
 [ext_resource type="Texture2D" uid="uid://7hseqt7ykpfs" path="res://Assets/Enemies/Monsters_Creatures_Fantasy/Mushroom/Take Hit.png" id="5_32n6p"]
 [ext_resource type="Texture2D" uid="uid://dpkjrlafvjafb" path="res://Assets/Enemies/Monsters_Creatures_Fantasy/Mushroom/Run.png" id="6_2put2"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_feen3"]
-atlas = ExtResource("1_dylk1")
-region = Rect2(0, 0, 150, 150)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_iwvf4"]
-atlas = ExtResource("1_dylk1")
-region = Rect2(150, 0, 150, 150)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_32n6p"]
-atlas = ExtResource("1_dylk1")
-region = Rect2(300, 0, 150, 150)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2put2"]
-atlas = ExtResource("1_dylk1")
-region = Rect2(450, 0, 150, 150)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_n3slh"]
-atlas = ExtResource("1_dylk1")
-region = Rect2(600, 0, 150, 150)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_70ju3"]
-atlas = ExtResource("1_dylk1")
-region = Rect2(750, 0, 150, 150)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vade6"]
-atlas = ExtResource("1_dylk1")
-region = Rect2(900, 0, 150, 150)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_urird"]
-atlas = ExtResource("1_dylk1")
-region = Rect2(1050, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3ugpg"]
 atlas = ExtResource("2_rhbnm")
@@ -86,6 +55,38 @@ region = Rect2(300, 0, 150, 150)
 [sub_resource type="AtlasTexture" id="AtlasTexture_flkms"]
 atlas = ExtResource("1_6l8yu")
 region = Rect2(450, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_feen3"]
+atlas = ExtResource("1_dylk1")
+region = Rect2(0, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iwvf4"]
+atlas = ExtResource("1_dylk1")
+region = Rect2(150, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_32n6p"]
+atlas = ExtResource("1_dylk1")
+region = Rect2(300, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2put2"]
+atlas = ExtResource("1_dylk1")
+region = Rect2(450, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n3slh"]
+atlas = ExtResource("1_dylk1")
+region = Rect2(600, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_70ju3"]
+atlas = ExtResource("1_dylk1")
+region = Rect2(750, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vade6"]
+atlas = ExtResource("1_dylk1")
+region = Rect2(900, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_urird"]
+atlas = ExtResource("1_dylk1")
+region = Rect2(1050, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_h0f7q"]
 atlas = ExtResource("4_iwvf4")
@@ -155,35 +156,6 @@ region = Rect2(1050, 0, 150, 150)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_feen3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_iwvf4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_32n6p")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2put2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_n3slh")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_70ju3")
-}, {
-"duration": 0.7,
-"texture": SubResource("AtlasTexture_vade6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_urird")
-}],
-"loop": true,
-"name": &"Attack",
-"speed": 10.0
-}, {
-"frames": [{
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_3ugpg")
 }, {
 "duration": 1.0,
@@ -227,6 +199,35 @@ animations = [{
 "loop": true,
 "name": &"Idle",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_feen3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iwvf4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_32n6p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2put2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n3slh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_70ju3")
+}, {
+"duration": 0.7,
+"texture": SubResource("AtlasTexture_vade6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_urird")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -292,10 +293,30 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2put2"]
+radius = 12.0
+height = 48.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_n3slh"]
+height = 40.0
+
+[node name="Mushroom" type="CharacterBody2D"]
+script = ExtResource("1_32n6p")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_58en8")
-animation = &"Attack"
+animation = &"take_hit"
 autoplay = "Idle"
-frame_progress = 0.620827
+frame_progress = 0.53182
+
+[node name="DAMAGER" type="Area2D" parent="."]
+
+[node name="DAMAGE" type="CollisionShape2D" parent="DAMAGER"]
+position = Vector2(1, 7)
+shape = SubResource("CapsuleShape2D_2put2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 7)
+shape = SubResource("CapsuleShape2D_n3slh")
+
+[connection signal="body_entered" from="DAMAGER" to="." method="_on_damager_body_entered"]

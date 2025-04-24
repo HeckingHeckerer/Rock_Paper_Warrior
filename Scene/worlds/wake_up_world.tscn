@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=3 uid="uid://f772nw0wvgct"]
+[gd_scene load_steps=74 format=3 uid="uid://f772nw0wvgct"]
 
 [ext_resource type="Texture2D" uid="uid://c4lit21qpv2bn" path="res://Assets/Places and backgrounds/DUNGEON/Ruins.png" id="1_de02y"]
 [ext_resource type="Script" uid="uid://cbbg0hd53obge" path="res://Rock_Paper_Warrior/Scripts/World_gates/Moss  to Forest.gd" id="1_xlko0"]
@@ -35,6 +35,7 @@
 [ext_resource type="Texture2D" uid="uid://bkt600r16a8hl" path="res://Assets/Contorls/Control BUttons/Rock button.png" id="33_3p0ea"]
 [ext_resource type="Texture2D" uid="uid://dboeapd73tvyh" path="res://Assets/Contorls/Control BUttons/Scissor Button.png" id="34_gy34m"]
 [ext_resource type="Texture2D" uid="uid://ccusc87kphwjj" path="res://Assets/Contorls/Control BUttons/Paper Button.png" id="35_oiobj"]
+[ext_resource type="Texture2D" uid="uid://x4ku2q4didiy" path="res://Assets/Contorls/Control BUttons/Interact.png" id="36_ddl2r"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jpkvg"]
 texture = ExtResource("4_nvgwn")
@@ -11095,7 +11096,7 @@ script = ExtResource("1_xlko0")
 
 [node name="Main Character" parent="." instance=ExtResource("3_nvgwn")]
 z_index = 100
-position = Vector2(196, 172)
+position = Vector2(2508, 79)
 disable_mode = 1
 
 [node name="Camera2D" type="Camera2D" parent="Main Character"]
@@ -11584,14 +11585,19 @@ scale = Vector2(0.485767, 0.485767)
 texture = ExtResource("35_oiobj")
 
 [node name="RichTextLabel6" type="RichTextLabel" parent="."]
-offset_left = -194.0
-offset_top = 64.0
-offset_right = 56.0
-offset_bottom = 104.0
+offset_left = -226.0
+offset_top = 67.0
+offset_right = 24.0
+offset_bottom = 107.0
 theme_override_fonts/normal_font = ExtResource("28_w1efv")
-text = "Test Area, Press \"E\"
-				v
-"
+text = "Test Area, Press \"E\" or 
+			          v
+ "
+
+[node name="Sprite2D8" type="Sprite2D" parent="."]
+position = Vector2(-15, 75)
+scale = Vector2(0.485767, 0.485767)
+texture = ExtResource("36_ddl2r")
 
 [connection signal="body_entered" from="TileMap2/Area2D" to="TileMap2/Area2D" method="_on_body_entered"]
 [connection signal="body_exited" from="TileMap2/Area2D" to="TileMap2/Area2D" method="_on_body_exited"]

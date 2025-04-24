@@ -1,10 +1,10 @@
 extends CharacterBody2D
 class_name Goblin_enemy
 
+
 @onready var goblin_animated: AnimatedSprite2D = $AnimatedSprite2D
-@onready var gob_deal_dmg: Area2D = $Gob_deal_dmg
-@onready var gob_deal_dmg_collision: CollisionShape2D = $Gob_deal_dmg/sword
-@onready var damager: CollisionShape2D = $DAMAGER/DAMAGE
+
+
 
 
 var attack_range = 50.0  # Distance to initiate attack
@@ -57,15 +57,11 @@ func _ready():
 		goblin_animated.animation_finished.connect(_on_animation_finished)
 	
 	
-	if not $Gob_deal_dmg.area_entered.is_connected(_on_attack_hit):
-		$Gob_deal_dmg.area_entered.connect(_on_attack_hit)
 
-	if not $GobHitbox.area_entered.is_connected(_on_gob_hitbox_area_entered):
-		$GobHitbox.area_entered.connect(_on_gob_hitbox_area_entered)
 
 	
 	# Initialize damage area
-	gob_deal_dmg_collision.disabled = true
+	
 
 func _physics_process(delta: float) -> void:
 	Globals.gob_DamageAmount = damage_to_deal
@@ -79,14 +75,11 @@ func _physics_process(delta: float) -> void:
 func flip_sprite(dir):
 	if dir > 0:
 		goblin_animated.flip_h = false
-		gob_deal_dmg.scale.x = 1
-		detect_ray_cast.scale.x = 1
-		attack_ray_cast.scale.x = 1
+		
 	else:
 		goblin_animated.flip_h = true
-		gob_deal_dmg.scale.x = -1
-		detect_ray_cast.scale.x = -1
-		attack_ray_cast.scale.x = -1
+		
+		
 
 func choose_new_target_position():
 	# Choose a random position within bounds
@@ -104,7 +97,7 @@ func initiate_state_machine():
 	var move_state = LimboState.new().named("move").call_on_enter(move_start).call_on_update(move_update)
 	var take_hit_state = LimboState.new().named("take_hit").call_on_enter(take_hit_start)
 	var death_state = LimboState.new().named("death").call_on_enter(death_start)
-	var chase_state = LimboState.new().named("chase").call_on_enter(chase_start).call_on_update(chase_update)
+
 	var attack_state = LimboState.new().named("attack").call_on_enter(attack_start)
 	
 	# Add states
@@ -112,7 +105,7 @@ func initiate_state_machine():
 	main_sm.add_child(move_state)
 	main_sm.add_child(take_hit_state)
 	main_sm.add_child(death_state)
-	main_sm.add_child(chase_state)
+	
 	main_sm.add_child(attack_state)
 	
 	# Set initial state
@@ -123,12 +116,10 @@ func initiate_state_machine():
 	main_sm.add_transition(main_sm.ANYSTATE, take_hit_state, &"to_take_hit")
 	main_sm.add_transition(take_hit_state, idle_state, &"state_ended")
 	main_sm.add_transition(idle_state, move_state, &"to_roam")
-	main_sm.add_transition(move_state, chase_state, &"to_chase")
-	main_sm.add_transition(chase_state, move_state, &"to_roam")
+	
 	main_sm.add_transition(move_state, idle_state, &"to_idle")
 	
-	main_sm.add_transition(chase_state, attack_state, &"to_attack")
-	main_sm.add_transition(attack_state, chase_state, &"attack_ended")
+	
 	main_sm.add_transition(attack_state, move_state, &"to_roam")
 	
 	main_sm.initialize(self)
@@ -136,6 +127,7 @@ func initiate_state_machine():
 
 # State Functions
 func idle_start():
+	print("IDLE STATE GOBLIN")
 	if not dead:
 		goblin_animated.play("idle")
 		velocity.x = 0
@@ -148,6 +140,7 @@ func idle_update(delta):
 	pass
 
 func move_start():
+	print("MOVE STATE GOBLIN")
 	if not dead:
 		goblin_animated.play("run")
 		choose_new_target_position()
@@ -170,46 +163,20 @@ func move_update(delta):
 		# Hit bounds, choose new target in opposite direction
 		choose_new_target_position()
 
-func chase_start():
-	if not dead:
-		goblin_animated.play("run")
-		timer.start()  # Start a timer for periodic checks
 
-func chase_update(delta):
-	if dead:
-		return
-	
-	var player = Globals.playerBody
-	if not player or not is_instance_valid(player):
-		main_sm.dispatch(&"to_roam")
-		return
-	
-	# Calculate direction to player
-	var player_dir = sign(player.global_position.x - global_position.x)
-	flip_sprite(player_dir)
-	
-	# Check distance to player
-	var distance_to_player = global_position.distance_to(player.global_position)
-	
-	if distance_to_player <= attack_range:
-		# Close enough to attack
-		main_sm.dispatch(&"to_attack")
-	elif detect_ray_cast.is_colliding() and detect_ray_cast.get_collider() == player:
-		# Chase the player
-		velocity.x = move_toward(velocity.x, player_dir * chase_speed, acceleration * delta)
-	else:
-		# Lost sight of player
-		main_sm.dispatch(&"to_roam")
+
 
 func take_hit_start():
+	print("TAKE HIT GOBLIN")
 	if not dead:
 		goblin_animated.play("take_hit")
 
 func death_start():
+	print("TAKE HIT GOBLIN")
 	dead = true
 	
-	damager.disabled = true
-	gob_deal_dmg_collision.disabled = true
+	
+	
 	
 	goblin_animated.play("death")
 	await get_tree().create_timer(2.0).timeout
@@ -218,18 +185,16 @@ func death_start():
 func attack_start():
 	if dead or not can_attack:
 		return
-	
+		
 	is_attacking = true
 	can_attack = false
 	velocity.x = 0  # Stop moving during attack
 	goblin_animated.play("attack")
 	
 	# Enable damage area during attack animation
-	gob_deal_dmg_collision.disabled = false
 	
-	# Start cooldown timer
-	await get_tree().create_timer(attack_cooldown).timeout
-	can_attack = true
+	
+
 	
 	# Check if we should continue chasing or return to roaming
 	var player = Globals.playerBody
@@ -241,17 +206,9 @@ func attack_start():
 func _on_attack_animation_finished():
 	if goblin_animated.animation == "attack":
 		is_attacking = false
-		gob_deal_dmg_collision.disabled = false # Disable damage after attack
 
-# Damage Handling
-func _on_gob_hitbox_area_entered(area: Area2D) -> void:
-	if area == Globals.playerDamageZone and not dead:
-		# Check if player is blocking
-		if Globals.is_blocking:
-			# Reduced damage when blocking
-			take_damage(Globals.playerDamageAmount * 0.5)
-		else:
-			take_damage(Globals.playerDamageAmount)
+
+
 
 func take_damage(damage):
 	if dead: 
@@ -261,8 +218,8 @@ func take_damage(damage):
 	health = max(health, 0)
 	
 	if health <= 0:
-		damager.disabled = true
-		gob_deal_dmg_collision.disabled = true
+		
+		
 		main_sm.dispatch(&"to_die")
 		# Drop coins on death
 		if Globals.playerBody:
@@ -294,16 +251,21 @@ func _on_animation_finished():
 				main_sm.dispatch(&"state_ended")
 		"attack":
 			_on_attack_animation_finished()
-		"death":
+		#"death":
 		 # Ensure collisions stay disabled
-			damager.disabled = true
-			gob_deal_dmg_collision.disabled = true
+	
+		
 
-func _on_area_2d_body_entered(body: Node2D) -> void:
+
+
+			
+
+func _on_damage_body_entered(body: Node2D) -> void:
 	if dead:  # Early return if dead
 		return
 		
 	if body is Player:
 		var player = body as Player
 		if player.can_take_damage and not player.dead:
+		
 			player.take_damage(20)
