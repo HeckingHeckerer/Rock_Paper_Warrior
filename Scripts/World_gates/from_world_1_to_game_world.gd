@@ -16,8 +16,4 @@ func _on_body_exited(body) -> void:
 
 func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("interact") and entered:
-		call_deferred("_change_scene")
-		
-
-func _change_scene():
-	get_tree().change_scene_to_file("res://Rock_Paper_Warrior/Scene/game.tscn")
+		get_tree().change_scene_to_file("res://Rock_Paper_Warrior/Scene/game.tscn")

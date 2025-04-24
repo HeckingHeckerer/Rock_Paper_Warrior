@@ -1,9 +1,12 @@
+<<<<<<< HEAD
 [gd_scene load_steps=74 format=3 uid="uid://f772nw0wvgct"]
+=======
+[gd_scene load_steps=63 format=3 uid="uid://f772nw0wvgct"]
+>>>>>>> parent of d3cf17c (iyurewrstyhdftyukujrhtgrfe)
 
 [ext_resource type="Texture2D" uid="uid://c4lit21qpv2bn" path="res://Assets/Places and backgrounds/DUNGEON/Ruins.png" id="1_de02y"]
 [ext_resource type="Script" uid="uid://cbbg0hd53obge" path="res://Rock_Paper_Warrior/Scripts/World_gates/Moss  to Forest.gd" id="1_xlko0"]
 [ext_resource type="Texture2D" uid="uid://ntr3x8eisr0j" path="res://Assets/Places and backgrounds/Mossy Tileset/MOSSY PX/Mossy Hills.png" id="2_jpkvg"]
-[ext_resource type="Script" uid="uid://dqioj6hv4a8pt" path="res://Rock_Paper_Warrior/Scripts/UI/camera_2d.gd" id="3_egpu6"]
 [ext_resource type="PackedScene" uid="uid://dbvvwwj16ctcg" path="res://Rock_Paper_Warrior/Scene/main_character.tscn" id="3_nvgwn"]
 [ext_resource type="Texture2D" uid="uid://dt618nsomr0g1" path="res://Assets/Places and backgrounds/Mossy Tileset/MOSSY PX/Mossy Plants PX.png" id="4_mp63o"]
 [ext_resource type="Texture2D" uid="uid://hkfijc8uvttu" path="res://Assets/Places and backgrounds/DUNGEON/gB5ImI.png" id="4_nvgwn"]
@@ -25,6 +28,7 @@
 [ext_resource type="Texture2D" uid="uid://geg3qk11hx21" path="res://Assets/Places and backgrounds/Parallax Cave/9.png" id="21_87g7b"]
 [ext_resource type="PackedScene" uid="uid://dvjbxvjafeekp" path="res://Rock_Paper_Warrior/Enemy Scenes/Goblin.tscn" id="22_n7e1e"]
 [ext_resource type="PackedScene" uid="uid://cds73mvooj61t" path="res://Rock_Paper_Warrior/Scene/Warrior.tscn" id="23_14kj8"]
+<<<<<<< HEAD
 [ext_resource type="PackedScene" uid="uid://c5t76hlyrs2my" path="res://Rock_Paper_Warrior/Scene/controls/controls.tscn" id="25_xlko0"]
 [ext_resource type="PackedScene" uid="uid://dsew5trsald8t" path="res://Rock_Paper_Warrior/Scene/Resource/door.tscn" id="26_1udsl"]
 [ext_resource type="FontFile" uid="uid://c1o5bqfjg561n" path="res://Assets/Contorls/Minecraft.ttf" id="28_w1efv"]
@@ -36,6 +40,9 @@
 [ext_resource type="Texture2D" uid="uid://dboeapd73tvyh" path="res://Assets/Contorls/Control BUttons/Scissor Button.png" id="34_gy34m"]
 [ext_resource type="Texture2D" uid="uid://ccusc87kphwjj" path="res://Assets/Contorls/Control BUttons/Paper Button.png" id="35_oiobj"]
 [ext_resource type="Texture2D" uid="uid://x4ku2q4didiy" path="res://Assets/Contorls/Control BUttons/Interact.png" id="36_ddl2r"]
+=======
+[ext_resource type="PackedScene" uid="uid://bb0au58pjul55" path="res://Rock_Paper_Warrior/Scene/buttons.tscn" id="24_37ktv"]
+>>>>>>> parent of d3cf17c (iyurewrstyhdftyukujrhtgrfe)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jpkvg"]
 texture = ExtResource("4_nvgwn")
@@ -81,7 +88,7 @@ sources/0 = SubResource("TileSetAtlasSource_jpkvg")
 radius = 16.0
 height = 72.0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xlko0"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ic74y"]
 texture = ExtResource("4_mp63o")
 2:1/0 = 0
 3:1/0 = 0
@@ -449,7 +456,7 @@ texture = ExtResource("4_mp63o")
 19:29/0 = 0
 20:29/0 = 0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1udsl"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_37ktv"]
 texture = ExtResource("5_jpkvg")
 0:0/0 = 0
 1:0/0 = 0
@@ -1789,7 +1796,7 @@ texture = ExtResource("5_jpkvg")
 34:36/0 = 0
 35:36/0 = 0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_egpu6"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_14kj8"]
 texture = ExtResource("7_mv6dk")
 26:0/0 = 0
 27:0/0 = 0
@@ -2373,11 +2380,11 @@ texture = ExtResource("7_mv6dk")
 30:31/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_jpkvg"]
-sources/0 = SubResource("TileSetAtlasSource_xlko0")
-sources/2 = SubResource("TileSetAtlasSource_egpu6")
-sources/1 = SubResource("TileSetAtlasSource_1udsl")
+sources/0 = SubResource("TileSetAtlasSource_ic74y")
+sources/2 = SubResource("TileSetAtlasSource_14kj8")
+sources/1 = SubResource("TileSetAtlasSource_37ktv")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w1efv"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xlko0"]
 texture = ExtResource("5_jpkvg")
 0:0/0 = 0
 1:0/0 = 0
@@ -3717,7 +3724,7 @@ texture = ExtResource("5_jpkvg")
 34:36/0 = 0
 35:36/0 = 0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_87g7b"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1udsl"]
 texture = ExtResource("7_mv6dk")
 26:0/0 = 0
 27:0/0 = 0
@@ -4311,7 +4318,7 @@ texture = ExtResource("7_mv6dk")
 23:30/0 = 0
 22:31/0 = 0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_do4js"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_egpu6"]
 texture = ExtResource("2_jpkvg")
 17:0/0 = 0
 18:0/0 = 0
@@ -4932,9 +4939,9 @@ texture = ExtResource("2_jpkvg")
 29:31/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_egpu6"]
-sources/0 = SubResource("TileSetAtlasSource_w1efv")
-sources/1 = SubResource("TileSetAtlasSource_87g7b")
-sources/3 = SubResource("TileSetAtlasSource_do4js")
+sources/0 = SubResource("TileSetAtlasSource_xlko0")
+sources/1 = SubResource("TileSetAtlasSource_1udsl")
+sources/3 = SubResource("TileSetAtlasSource_egpu6")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mp63o"]
 texture = ExtResource("5_jpkvg")
@@ -11096,7 +11103,11 @@ script = ExtResource("1_xlko0")
 
 [node name="Main Character" parent="." instance=ExtResource("3_nvgwn")]
 z_index = 100
+<<<<<<< HEAD
 position = Vector2(2508, 79)
+=======
+position = Vector2(2664, 69)
+>>>>>>> parent of d3cf17c (iyurewrstyhdftyukujrhtgrfe)
 disable_mode = 1
 
 [node name="Camera2D" type="Camera2D" parent="Main Character"]
@@ -11105,7 +11116,6 @@ scale = Vector2(4.43263, 70100.4)
 zoom = Vector2(2, 2)
 limit_smoothed = true
 position_smoothing_enabled = true
-script = ExtResource("3_egpu6")
 
 [node name="TileMap2" type="TileMap" parent="."]
 z_index = -8
@@ -11439,11 +11449,22 @@ autoplay = "default"
 frame_progress = 0.960772
 
 [node name="Transition" type="Area2D" parent="."]
-position = Vector2(-1010, -932)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Transition"]
 position = Vector2(3398, 69)
 shape = SubResource("RectangleShape2D_xlko0")
+
+[node name="Control" type="Control" parent="."]
+visible = false
+z_index = 1000
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Buttons" parent="Control" instance=ExtResource("24_37ktv")]
+layer = 128
+visible = false
 
 [node name="Enemies" type="Node2D" parent="."]
 
@@ -11451,10 +11472,7 @@ shape = SubResource("RectangleShape2D_xlko0")
 position = Vector2(66, 25)
 
 [node name="goblin" parent="Enemies" instance=ExtResource("22_n7e1e")]
-position = Vector2(2629, 29)
-
-[node name="goblin2" parent="Enemies" instance=ExtResource("22_n7e1e")]
-position = Vector2(2793, 144)
+position = Vector2(2686, 40)
 
 [node name="Damage Objects" type="Area2D" parent="."]
 collision_layer = 4
@@ -11478,6 +11496,7 @@ z_index = 300
 position = Vector2(1168, -107)
 polygon = PackedVector2Array(681, 156, 698, 166, 699, 187, 680, 201)
 
+<<<<<<< HEAD
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 128
 
@@ -11598,11 +11617,13 @@ text = "Test Area, Press \"E\" or
 position = Vector2(-15, 75)
 scale = Vector2(0.485767, 0.485767)
 texture = ExtResource("36_ddl2r")
+=======
+[node name="goblin" parent="." instance=ExtResource("22_n7e1e")]
+position = Vector2(2793, 144)
+>>>>>>> parent of d3cf17c (iyurewrstyhdftyukujrhtgrfe)
 
 [connection signal="body_entered" from="TileMap2/Area2D" to="TileMap2/Area2D" method="_on_body_entered"]
 [connection signal="body_exited" from="TileMap2/Area2D" to="TileMap2/Area2D" method="_on_body_exited"]
 [connection signal="body_entered" from="Transition" to="." method="_on_transition_body_entered"]
 [connection signal="body_exited" from="Transition" to="." method="_on_transition_body_exited"]
 [connection signal="body_entered" from="Damage Objects" to="." method="_on_damage_objects_body_entered"]
-
-[editable path="Doors/Door_forest"]

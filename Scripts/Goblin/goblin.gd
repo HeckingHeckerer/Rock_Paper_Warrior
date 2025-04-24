@@ -11,6 +11,7 @@ var attack_range = 50.0  # Distance to initiate attack
 var attack_cooldown = 1.5  # Time between attacks
 var can_attack = true
 var is_attacking = false
+@onready var gob_deal_dmg: Area2D = $Gob_deal_dmg
 
 # Stats
 var health = 50
@@ -34,17 +35,16 @@ var main_sm : LimboHSM
 @onready var timer: Timer = $Timer
 
 # Movement
+@export var move_speed: float = 165
+@export var move_tolerance: float = 10
 var current_direction: int = 1
-var target_position: Vector2
-var move_tolerance: float = 10
-var left_bounds: Vector2
-var right_bounds: Vector2
 
 func _ready():
 	# Initialize state machine
 	initiate_state_machine()
 	goblin_animated.animation_finished.connect(_on_animation_finished)
 	
+<<<<<<< HEAD
 	# Set patrol bounds relative to starting position
 	left_bounds = self.position + Vector2(-125, 0)
 	right_bounds = self.position + Vector2(125, 0)
@@ -63,18 +63,35 @@ func _ready():
 	# Initialize damage area
 	
 
+=======
+>>>>>>> parent of d3cf17c (iyurewrstyhdftyukujrhtgrfe)
 func _physics_process(delta: float) -> void:
+	
 	Globals.gob_DamageAmount = damage_to_deal
 	Globals.gob_DamageZone = $Gob_deal_dmg
-	main_sm.update(delta)
 	
 	if not dead:
 		velocity += get_gravity() * delta
 		move_and_slide()
-
+		
+# Movement function called by BTAction
+func move(dir: int, speed: float):
+	if dead: return
+	
+	current_direction = dir
+	flip_sprite(dir)
+	
+	if speed > 0:
+		main_sm.dispatch(&"to_move")
+		velocity.x = dir * speed
+	else:
+		main_sm.dispatch(&"to_idle")
+		velocity.x = 0
+	
 func flip_sprite(dir):
 	if dir > 0:
 		goblin_animated.flip_h = false
+<<<<<<< HEAD
 		
 	else:
 		goblin_animated.flip_h = true
@@ -88,17 +105,25 @@ func choose_new_target_position():
 		position.y
 	)
 
+=======
+		gob_deal_dmg.scale.x = 1
+	else:
+		goblin_animated.flip_h = true
+		gob_deal_dmg.scale.x = -1
+		
+>>>>>>> parent of d3cf17c (iyurewrstyhdftyukujrhtgrfe)
 func initiate_state_machine():
 	main_sm = LimboHSM.new()
 	add_child(main_sm)
 	
 	# Define states
-	var idle_state = LimboState.new().named("idle").call_on_enter(idle_start).call_on_update(idle_update)
 	var move_state = LimboState.new().named("move").call_on_enter(move_start).call_on_update(move_update)
 	var take_hit_state = LimboState.new().named("take_hit").call_on_enter(take_hit_start)
 	var death_state = LimboState.new().named("death").call_on_enter(death_start)
+<<<<<<< HEAD
 
 	var attack_state = LimboState.new().named("attack").call_on_enter(attack_start)
+	var chase_state = LimboState.new().named("chase").call_on_enter(chase_start).call_on_update(chase_update)
 	
 	# Add states
 	main_sm.add_child(idle_state)
@@ -107,13 +132,14 @@ func initiate_state_machine():
 	main_sm.add_child(death_state)
 	
 	main_sm.add_child(attack_state)
+	main_sm.add_child(chase_state)
 	
 	# Set initial state
-	main_sm.initial_state = move_state
 	
 	# Transitions
 	main_sm.add_transition(main_sm.ANYSTATE, death_state, &"to_die")
 	main_sm.add_transition(main_sm.ANYSTATE, take_hit_state, &"to_take_hit")
+	main_sm.add_transition(idle_state, take_hit_state, &"to_take_hit")
 	main_sm.add_transition(take_hit_state, idle_state, &"state_ended")
 	main_sm.add_transition(idle_state, move_state, &"to_roam")
 	
@@ -121,6 +147,11 @@ func initiate_state_machine():
 	
 	
 	main_sm.add_transition(attack_state, move_state, &"to_roam")
+	
+	main_sm.add_transition(idle_state, chase_state, &"to_chase")
+	main_sm.add_transition(chase_state, idle_state, &"to_roam")
+	main_sm.add_transition(idle_state, move_state, &"to_move")
+	main_sm.add_transition(move_state, idle_state, &"to_idle")
 	
 	main_sm.initialize(self)
 	main_sm.set_active(true)
@@ -130,20 +161,11 @@ func idle_start():
 	print("IDLE STATE GOBLIN")
 	if not dead:
 		goblin_animated.play("idle")
-		velocity.x = 0
-		# After a short delay, go back to moving
-		await get_tree().create_timer(randf_range(1.0, 3.0)).timeout
-		if not dead and main_sm.get_active_state().name == "idle":
-			main_sm.dispatch(&"to_roam")
-
-func idle_update(delta):
-	pass
 
 func move_start():
 	print("MOVE STATE GOBLIN")
 	if not dead:
 		goblin_animated.play("run")
-		choose_new_target_position()
 
 func move_update(delta):
 	if dead:
@@ -165,6 +187,8 @@ func move_update(delta):
 
 
 
+func move_update(delta: float):
+	pass  # Movement is handled in physics_process via move() function
 
 func take_hit_start():
 	print("TAKE HIT GOBLIN")
@@ -209,10 +233,13 @@ func _on_attack_animation_finished():
 
 
 
+# Damage Handling
+func _on_gob_hitbox_area_entered(area: Area2D) -> void:
+	if area == Globals.playerDamageZone and not dead:
+		take_damage(Globals.playerDamageAmount)
 
 func take_damage(damage):
-	if dead: 
-		return
+	if dead: return
 	
 	health -= damage
 	health = max(health, 0)
@@ -221,29 +248,20 @@ func take_damage(damage):
 		
 		
 		main_sm.dispatch(&"to_die")
-		# Drop coins on death
-		if Globals.playerBody:
-			Globals.playerBody.coins += coins
 	else:
 		main_sm.dispatch(&"to_take_hit")
-		# Apply knockback if not dead
-		if Globals.playerBody:
-			var knockback_dir = sign(global_position.x - Globals.playerBody.global_position.x)
-			velocity.x = knockback_dir * 200  # Knockback force
-			velocity.y = -100  # Small upward knockback
-			
-func _on_attack_hit(area: Area2D):
-	if area == Globals.playerDamageZone and is_attacking and not Globals.is_invulnerable:
-		# Deal damage to player
-		Globals.playerBody.take_damage(damage_to_deal)
-		
-		# Apply knockback to player
-		if Globals.playerBody:
-			var knockback_dir = sign(Globals.playerBody.global_position.x - global_position.x)
-			Globals.playerBody.velocity.x = knockback_dir * 150
-			Globals.playerBody.velocity.y = -100
+	
+	print(str(self), " current health: ", health)
 
-# Animation Callback
+func chase_start():
+	pass
+
+func chase_update(delta: float):
+	pass
+# Physics
+
+
+# Animation Callback - This is where we handle the transition
 func _on_animation_finished():
 	match goblin_animated.animation:
 		"take_hit":
@@ -269,3 +287,6 @@ func _on_damage_body_entered(body: Node2D) -> void:
 		if player.can_take_damage and not player.dead:
 		
 			player.take_damage(20)
+	if goblin_animated.animation == "take_hit" and not dead:
+		main_sm.dispatch(&"state_ended")
+		

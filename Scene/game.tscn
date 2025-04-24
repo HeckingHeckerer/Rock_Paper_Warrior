@@ -776,12 +776,5 @@ offset_bottom = 40.0
 
 [node name="Buttons" parent="Control" instance=ExtResource("19_nbfoq")]
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
-offset_left = 496.0
-offset_top = -24.0
-offset_right = 746.0
-offset_bottom = 16.0
-text = "TEST AREA!!!"
-
 [connection signal="body_entered" from="TileMap2/Area2D" to="TileMap2/Area2D" method="_on_body_entered"]
 [connection signal="body_exited" from="TileMap2/Area2D" to="TileMap2/Area2D" method="_on_body_exited"]

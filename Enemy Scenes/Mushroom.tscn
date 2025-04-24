@@ -305,6 +305,7 @@ script = ExtResource("1_32n6p")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_58en8")
+<<<<<<< HEAD
 animation = &"take_hit"
 autoplay = "Idle"
 frame_progress = 0.53182
@@ -320,3 +321,7 @@ position = Vector2(1, 7)
 shape = SubResource("CapsuleShape2D_n3slh")
 
 [connection signal="body_entered" from="DAMAGER" to="." method="_on_damager_body_entered"]
+=======
+animation = &"death"
+autoplay = "Idle"
+>>>>>>> parent of d3cf17c (iyurewrstyhdftyukujrhtgrfe)
